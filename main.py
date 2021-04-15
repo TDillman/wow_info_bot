@@ -3,10 +3,17 @@ import requests
 import nest_asyncio
 import time
 import os
+import logging
 
 from discord.ext import commands
 from blizzardapi import BlizzardApi
 from datetime import datetime
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
 nest_asyncio.apply()
 
@@ -361,7 +368,7 @@ async def custom(ctx):
     await ctx.message.delete()
 
 
-#There has to be a better way to do this.
+#There has to be a better way to do this                    
 @bot.event
 async def on_message(ctx):
     if ctx.author == bot.user:
@@ -388,7 +395,7 @@ async def on_message(ctx):
         await ctx.channel.send('https://media.discordapp.net/attachments/765619338337058827/802299499908563024/'
                                'whatever.gif')
         print_to_console()
-    if '!cool' in ctx.content.lower():
+    if '!cool' in ctx.content.lower() or 'cool cool cool' in ctx.content.lower():
         await ctx.channel.send('https://tenor.com/view/andy-samberg-brooklyn99-jake-peralta-cool-gif-12063970')
         print_to_console()
     if '!myst' in ctx.content.lower():
@@ -397,7 +404,7 @@ async def on_message(ctx):
     if '!beylock' in ctx.content.lower():
         await ctx.channel.send('Oh boy! Picante!')
         print_to_console()
-    if '!flex' in ctx.content.lower():
+    if '!flex' in ctx.content.lower() or "flex" in ctx.content.lower():
         await ctx.channel.send(
             'https://cdn.discordapp.com/attachments/676183284123828236/823278892676022353/image0.jpg')
         print_to_console()
@@ -413,5 +420,7 @@ async def on_message(ctx):
             'https://tenor.com/view/james-franco-fuck-that-dude-fuckoff-annoyed-annoying-gif-11146686')
         print_to_console()
 
+    #Without the following line, the bot gets stuck and won't process commands                
+    await bot.process_commands(ctx)
 
 bot.run(discord_access_token)
