@@ -361,137 +361,57 @@ async def custom(ctx):
     await ctx.message.delete()
 
 
-@bot.command()
-async def scrumpy(ctx):
+#There has to be a better way to do this.
+@bot.event
+async def on_message(ctx):
     if ctx.author == bot.user:
         return
 
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
+    def print_to_console():
+        print(f'{datetime.now()}: {ctx.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
+              f'{ctx.content}')
 
-    await ctx.channel.send('Thinks your bags are awful')
+    if '!scrumpy' in ctx.content.lower():
+        await ctx.channel.send('Thinks your bags are awful')
+        print_to_console()
+    if '!calendar' in ctx.content.lower():
+        await ctx.channel.send('<@267888830634262529> needs to update the calendar!')
+        print_to_console()
+    if '!golfclap' in ctx.content.lower():
+        await ctx.channel.send('https://tenor.com/view/charlie-sheen-emilio-estevez-golf-clap-men-at-work-gif-7577611')
+        print_to_console()
+    if '!spooky' in ctx.content.lower():
+        await ctx.channel.send('https://img1.cgtrader.com/items/1911482/ca45cf3f32/'
+                               'air-horn-3d-model-max-obj-mtl-3ds-fbx-dxf.jpg')
+        print_to_console()
+    if '!whatever' in ctx.content.lower():
+        await ctx.channel.send('https://media.discordapp.net/attachments/765619338337058827/802299499908563024/'
+                               'whatever.gif')
+        print_to_console()
+    if '!cool' in ctx.content.lower():
+        await ctx.channel.send('https://tenor.com/view/andy-samberg-brooklyn99-jake-peralta-cool-gif-12063970')
+        print_to_console()
+    if '!myst' in ctx.content.lower():
+        await ctx.channel.send('https://tenor.com/view/is-it-though-thor-smile-gif-13334930')
+        print_to_console()
+    if '!beylock' in ctx.content.lower():
+        await ctx.channel.send('Oh boy! Picante!')
+        print_to_console()
+    if '!flex' in ctx.content.lower():
+        await ctx.channel.send(
+            'https://cdn.discordapp.com/attachments/676183284123828236/823278892676022353/image0.jpg')
+        print_to_console()
+    if '!happybirthday' in ctx.content.lower():
+        await ctx.channel.send('https://giphy.com/gifs/i8htPQwChFOVcpnImq')
+        print_to_console()
+    if '!magic' in ctx.content.lower():
+        await ctx.channel.send('https://media.discordapp.net/attachments/676183284123828236/761438362720272394/'
+                               'Kat_Confetti.gif')
+        print_to_console()
+    if '!lynkz' in ctx.content.lower():
+        await ctx.channel.send(
+            'https://tenor.com/view/james-franco-fuck-that-dude-fuckoff-annoyed-annoying-gif-11146686')
+        print_to_console()
 
-@bot.command()
-async def calendar(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('<@267888830634262529> needs to update the calendar!')
-
-
-@bot.command()
-async def golfclap(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('https://tenor.com/view/charlie-sheen-emilio-estevez-golf-clap-men-at-work-gif-7577611')
-
-
-@bot.command()
-async def spooky(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('https://img1.cgtrader.com/items/1911482/ca45cf3f32/'
-                           'air-horn-3d-model-max-obj-mtl-3ds-fbx-dxf.jpg')
-
-
-@bot.command()
-async def whatever(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('https://media.discordapp.net/attachments/765619338337058827/802299499908563024/'
-                           'whatever.gif')
-
-
-@bot.command()
-async def cool(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('https://tenor.com/view/andy-samberg-brooklyn99-jake-peralta-cool-gif-12063970')
-
-
-@bot.command()
-async def myst(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('https://tenor.com/view/is-it-though-thor-smile-gif-13334930')
-
-
-@bot.command()
-async def beylock(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('Oh boy! Picante!')
-
-
-@bot.command()
-async def flex(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('https://cdn.discordapp.com/attachments/676183284123828236/823278892676022353/image0.jpg')
-
-
-@bot.command()
-async def happybirthday(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('https://giphy.com/gifs/i8htPQwChFOVcpnImq')
-
-
-@bot.command()
-async def magic(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('https://media.discordapp.net/attachments/676183284123828236/761438362720272394/'
-                           'Kat_Confetti.gif')
-
-
-@bot.command()
-async def lynkz(ctx):
-    if ctx.author == bot.user:
-        return
-
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
-
-    await ctx.channel.send('https://tenor.com/view/james-franco-fuck-that-dude-fuckoff-annoyed-annoying-gif-11146686')
 
 bot.run(discord_access_token)
