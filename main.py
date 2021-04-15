@@ -69,7 +69,6 @@ async def summary(ctx, arg):
                                                                                             character_name)
 
         character_inset_image = character_image_object['assets'][1]['value']
-        character_avatar_image = character_image_object['assets'][3]['value']
 
         name_string = f"{character_gear_object['name']}, level {character_gear_object['level']} " \
                       f"{character_gear_object['race']['name']} {character_gear_object['active_spec']['name']} " \
@@ -85,6 +84,7 @@ async def summary(ctx, arg):
                           f"{character_gear_object['covenant_progress']['renown_level']}"
 
         enchant_string = ''
+
         for x in range(len(character_equipment_object['equipped_items'])):
             try:
                 enchant_string += f"{character_equipment_object['equipped_items'][x]['enchantments'][0]['source_item']['name']}\n"
@@ -120,9 +120,14 @@ async def summary(ctx, arg):
             if character_gear_object['character_class']['name'] == char_class:
                 discord_embed_color = color_value
 
+        raider_io_url = f'https://raider.io/characters/us/{server_slug}/{character_name}'
+        armory_url = f'https://worldofwarcraft.com/en-us/character/us/{server_slug}/{character_name}'
+        wcl_url = f'https://www.warcraftlogs.com/character/us/{server_slug}/{character_name}'
+
         # Create embed in Discord
         embed = discord.Embed(title=name_string, color=discord_embed_color)
         embed.set_author(name="Character Summary")
+        embed.description = f'[Raider.io]({raider_io_url}) | [Armory]({armory_url}) | [Warcraft Logs]({wcl_url})'
         embed.add_field(name="Gear", value=ilvl_string, inline=True)
         embed.add_field(name="Guild", value=guild_string, inline=True)
         embed.add_field(name="Covenant", value=covenant_string, inline=True)
@@ -130,7 +135,6 @@ async def summary(ctx, arg):
         embed.add_field(name="Legendary", value=legendary_string, inline=True)
         embed.add_field(name="Raider.io Ratings", value=raider_io_string, inline=False)
         embed.set_thumbnail(url=character_inset_image)
-        embed.set_image(url=character_avatar_image)
         embed.set_footer(text=footer)
 
         # Send embed, delete message
@@ -254,13 +258,71 @@ async def ironman(ctx):
     await ctx.channel.send(embed=embed)
     await ctx.message.delete()
 
+@bot.command(pass_context=True)
+async def token(ctx):
+    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
+          f'{ctx.message.content}')
+
+    if ctx.author == bot.user:
+        return
+
+    token = api_client.wow.game_data.get_token_index("us", "en_US")
+
+    footer = f'Might Infobot by Beylock-Arygos\nCommand executed at {datetime.now()}'
+
+    embed = discord.Embed(title='WoW Token')
+    embed.add_field(name='Current Price', value=f'{token["price"]/10000:,.0f} :coin:')
+    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcolored'
+                            'finishedsmall.png')
+    embed.set_footer(text=footer)
+    await ctx.channel.send(embed=embed)
+
+    time.sleep(.25)
+    await ctx.message.delete()
+
+
+@bot.command(pass_context=True)
+async def status(ctx):
+    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
+          f'{ctx.message.content}')
+
+    if ctx.author == bot.user:
+        return
+
+    server = api_client.wow.game_data.get_connected_realm("us", "en_US", 99)
+
+    server_status = server['status']['name']
+    server_pop = server['population']['name']
+
+    connections_list = [server['realms'][x]['name'] for x in range(len(server['realms']))]
+
+    if server_status == "Up":
+        status_color = 0x00ff00 # Green for up
+    else: status_color = 0xff0000 # Red for down
+
+    server_string = ', '.join(str(name) for name in connections_list)
+
+    footer = f'Might Infobot by Beylock-Arygos\nCommand executed at {datetime.now()}'
+
+    embed = discord.Embed(title='Arygos', color=status_color)
+    embed.add_field(name='Current Status', value=f'Server is currently {server_status}', inline=True)
+    embed.add_field(name='Current Population', value=f'This is a {server_pop.lower()} pop server', inline=True)
+    embed.add_field(name='Connected Realms', value=server_string, inline=False)
+    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcolored'
+                            'finishedsmall.png')
+    embed.set_footer(text=footer)
+    await ctx.channel.send(embed=embed)
+
+    time.sleep(.25)
+    await ctx.message.delete()
+
 @bot.command()
-async def sim():
+async def sim(ctx):
     pass
 
 
 @bot.command()
-async def raidbots():
+async def raidbots(ctx):
     pass
 
 
@@ -273,9 +335,9 @@ async def commands(ctx):
           f'{ctx.message.content}')
 
     await ctx.author.send(
-        "Chat commands: \n\n!summary Character-Server\n!custom\n"
+        "Chat commands: \n\n!summary Character-Server\n!status\n!token\n!custom\n"
         "This bot is configured to have Arygos as the default server, so if your character is on Arygos, you don't need"
-        "to specify the realm"
+        " to specify the realm"
     )
 
     time.sleep(.25)
@@ -292,7 +354,7 @@ async def custom(ctx):
 
     await ctx.author.send(
         'Custom commands: \n\n!scrumpy\n!golfclap\n!spooky\n!whatever\n!cool\n!myst\n!beylock\n!flex\n!happybirthday'
-        '\n!magic\n!lynkz'
+        '\n!magic\n!lynkz\n!calendar'
     )
 
     time.sleep(.25)
@@ -308,6 +370,16 @@ async def scrumpy(ctx):
           f'{ctx.message.content}')
 
     await ctx.channel.send('Thinks your bags are awful')
+
+@bot.command()
+async def calendar(ctx):
+    if ctx.author == bot.user:
+        return
+
+    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
+          f'{ctx.message.content}')
+
+    await ctx.channel.send('<@267888830634262529> needs to update the calendar!')
 
 
 @bot.command()
