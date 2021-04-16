@@ -59,6 +59,8 @@ async def summary(ctx, arg):
 
         name_list = arg.split("-", 1)
 
+        character_name = None
+        server_slug = None
         if len(name_list) == 1:
             character_name = name_list[0].lower()
             server_slug = 'arygos'
@@ -98,6 +100,7 @@ async def summary(ctx, arg):
             except:
                 pass
 
+        legendary_string = None
         for x in range(len(character_equipment_object['equipped_items'])):
             if character_gear_object['level'] < 60:
                 legendary_string = "No Legendary"
@@ -123,6 +126,7 @@ async def summary(ctx, arg):
         raider_io_string = f'Overall rating: {overall_io_rank}\nDPS rating: {dps_io_rank}\nHealer rating: ' \
                            f'{healer_io_rank}\nTank rating: {tank_io_rank}'
 
+        discord_embed_color = None
         for char_class, color_value in discord_embed_color_dict.items():
             if character_gear_object['character_class']['name'] == char_class:
                 discord_embed_color = color_value
@@ -163,6 +167,8 @@ async def summary(ctx, arg):
 
 
 winner_dict = {}
+
+
 @bot.command(pass_context=True)
 async def win(ctx, *args):
     print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
@@ -265,6 +271,7 @@ async def ironman(ctx):
     await ctx.channel.send(embed=embed)
     await ctx.message.delete()
 
+
 @bot.command(pass_context=True)
 async def token(ctx):
     print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
@@ -304,8 +311,9 @@ async def status(ctx):
     connections_list = [server['realms'][x]['name'] for x in range(len(server['realms']))]
 
     if server_status == "Up":
-        status_color = 0x00ff00 # Green for up
-    else: status_color = 0xff0000 # Red for down
+        status_color = 0x00ff00  # Green for up
+    else:
+        status_color = 0xff0000  # Red for down
 
     server_string = ', '.join(str(name) for name in connections_list)
 
@@ -322,6 +330,7 @@ async def status(ctx):
 
     time.sleep(.25)
     await ctx.message.delete()
+
 
 @bot.command()
 async def sim(ctx):
