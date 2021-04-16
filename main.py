@@ -368,7 +368,7 @@ async def custom(ctx):
     await ctx.message.delete()
 
 
-#There has to be a better way to do this                    
+# There has to be a better way to do this
 @bot.event
 async def on_message(ctx):
     if ctx.author == bot.user:
@@ -404,7 +404,7 @@ async def on_message(ctx):
     if '!beylock' in ctx.content.lower():
         await ctx.channel.send('Oh boy! Picante!')
         print_to_console()
-    if '!flex' in ctx.content.lower() or "flex" in ctx.content.lower():
+    if 'flex' in ctx.content.lower():
         await ctx.channel.send(
             'https://cdn.discordapp.com/attachments/676183284123828236/823278892676022353/image0.jpg')
         print_to_console()
@@ -420,7 +420,7 @@ async def on_message(ctx):
             'https://tenor.com/view/james-franco-fuck-that-dude-fuckoff-annoyed-annoying-gif-11146686')
         print_to_console()
 
-    #Without the following line, the bot gets stuck and won't process commands                
+    # Without the following line, the bot gets stuck and won't process commands
     await bot.process_commands(ctx)
 
 bot.run(discord_access_token)
