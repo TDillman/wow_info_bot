@@ -281,7 +281,7 @@ async def token(ctx):
     token_object = api_client.wow.game_data.get_token_index("us", "en_US")
 
     embed = discord.Embed(title='WoW Token')
-    embed.add_field(name='Current Price', value=f'{token_object["price"]/10000:,.0f} :gold:')
+    embed.add_field(name='Current Price', value=f'{token_object["price"]/10000:,.0f} gold')
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcolored'
                             'finishedsmall.png')
     embed.set_footer(text=f'{footer} {datetime.now()}')
