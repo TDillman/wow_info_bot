@@ -57,7 +57,7 @@ async def summary(ctx, arg):
     try:
         footer = f'Might Infobot by Beylock-Arygos\nCommand executed at {datetime.now()}'
         print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
-              f'{ctx.message.content}')
+              f'{ctx.message.content} in the #{ctx.channel.name} channel')
 
         name_list = arg.split("-", 1)
 
@@ -153,7 +153,6 @@ async def summary(ctx, arg):
         # Send embed, delete message
         await ctx.author.send(embed=embed)
         await ctx.message.delete()
-        print(ctx.channel.name)
 
     except KeyError:
         await ctx.author.send(
@@ -175,7 +174,7 @@ winner_dict = {}
 @bot.command(pass_context=True)
 async def win(ctx, *args):
     print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
-          f'{ctx.message.content}')
+          f'{ctx.message.content} in the #{ctx.channel.name} channel')
     if ctx.author == bot.user:
         return
 
@@ -231,7 +230,7 @@ async def win(ctx, *args):
 @bot.command(pass_context=True)
 async def ironman(ctx):
     print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
-          f'{ctx.message.content}')
+          f'{ctx.message.content} in the #{ctx.channel.name} channel')
 
     if ctx.author == bot.user:
         return
@@ -274,7 +273,7 @@ async def ironman(ctx):
 @bot.command(pass_context=True)
 async def token(ctx):
     print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
-          f'{ctx.message.content}')
+          f'{ctx.message.content} in the #{ctx.channel.name} channel')
 
     if ctx.author == bot.user:
         return
@@ -295,7 +294,7 @@ async def token(ctx):
 @bot.command(pass_context=True)
 async def status(ctx):
     print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
-          f'{ctx.message.content}')
+          f'{ctx.message.content} in the #{ctx.channel.name} channel')
 
     if ctx.author == bot.user:
         return
@@ -342,8 +341,9 @@ async def commands(ctx):
     if ctx.author == bot.user:
         return
 
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
+    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
+          f'{ctx.message.content} in the #{ctx.channel.name} channel')
+
 
     await ctx.author.send(
         "Chat commands: \n\n!summary Character-Server\n!status\n!token\n!custom\n"
@@ -360,8 +360,8 @@ async def custom(ctx):
     if ctx.author == bot.user:
         return
 
-    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-          f'{ctx.message.content}')
+    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
+          f'{ctx.message.content} in the #{ctx.channel.name} channel')
 
     await ctx.author.send(
         'Custom commands: \n\n!scrumpy\n!golfclap\n!spooky\n!whatever\n!cool\n!myst\n!beylock\n!flex\n!happybirthday'
@@ -379,8 +379,8 @@ async def on_message(ctx):
         return
 
     def print_to_console():
-        print(f'{datetime.now()}: {ctx.guild.name} -- {ctx.author.display_name} ({ctx.author}): '
-              f'{ctx.content}')
+        print(f'{datetime.now()}: {ctx.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
+              f'{ctx.content} in the #{ctx.channel.name} channel')
 
     if '!scrumpy' in ctx.content.lower():
         await ctx.channel.send('Thinks your bags are awful')
