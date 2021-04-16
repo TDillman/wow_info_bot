@@ -41,6 +41,8 @@ discord_embed_color_dict = {
     'Warrior': 0xC69B6D
 }
 
+footer = 'Might Infobot by Beylock-Arygos\nCommand executed at'
+
 
 @bot.event
 async def on_ready():
@@ -146,7 +148,7 @@ async def summary(ctx, arg):
         embed.add_field(name="Legendary", value=legendary_string, inline=True)
         embed.add_field(name="Raider.io Ratings", value=raider_io_string, inline=False)
         embed.set_thumbnail(url=character_inset_image)
-        embed.set_footer(text=footer)
+        embed.set_footer(text=f'{footer} {datetime.now()}')
 
         # Send embed, delete message
         await ctx.author.send(embed=embed)
@@ -175,8 +177,6 @@ async def win(ctx, *args):
           f'{ctx.message.content}')
     if ctx.author == bot.user:
         return
-
-    footer = f'Might Infobot by Beylock-Arygos\nCommand executed at {datetime.now()}'
 
     role = discord.utils.get(ctx.guild.roles, name="Officer")
     if role in ctx.author.roles:
@@ -220,7 +220,7 @@ async def win(ctx, *args):
         embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/'
                                 'mightcoloredfinishedsmall.png')
         embed.set_image(url='https://i.imgur.com/ZnIwBzf.png')
-        embed.set_footer(text=footer)
+        embed.set_footer(text=f'{footer} {datetime.now()}')
         await ctx.channel.send(embed=embed)
         await ctx.message.delete()
     else:
@@ -261,13 +261,11 @@ async def ironman(ctx):
     for item in ironman_list:
         ironman_scoreboard += f'{item}\n'
 
-    footer = f'Might Infobot by Beylock-Arygos\nCommand executed at {datetime.now()}'
-
     embed = discord.Embed(title=f'Might 2021 Ironman Contest')
     embed.add_field(name='Current Participants:', value=ironman_scoreboard)
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcolored'
                             'finishedsmall.png')
-    embed.set_footer(text=footer)
+    embed.set_footer(text=f'{footer} {datetime.now()}')
     await ctx.channel.send(embed=embed)
     await ctx.message.delete()
 
@@ -280,15 +278,13 @@ async def token(ctx):
     if ctx.author == bot.user:
         return
 
-    token = api_client.wow.game_data.get_token_index("us", "en_US")
-
-    footer = f'Might Infobot by Beylock-Arygos\nCommand executed at {datetime.now()}'
+    token_object = api_client.wow.game_data.get_token_index("us", "en_US")
 
     embed = discord.Embed(title='WoW Token')
-    embed.add_field(name='Current Price', value=f'{token["price"]/10000:,.0f} :coin:')
+    embed.add_field(name='Current Price', value=f'{token_object["price"]/10000:,.0f} :coin:')
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcolored'
                             'finishedsmall.png')
-    embed.set_footer(text=footer)
+    embed.set_footer(text=f'{footer} {datetime.now()}')
     await ctx.channel.send(embed=embed)
 
     time.sleep(.25)
@@ -317,15 +313,13 @@ async def status(ctx):
 
     server_string = ', '.join(str(name) for name in connections_list)
 
-    footer = f'Might Infobot by Beylock-Arygos\nCommand executed at {datetime.now()}'
-
     embed = discord.Embed(title='Arygos', color=status_color)
     embed.add_field(name='Current Status', value=f'Server is currently {server_status}', inline=True)
     embed.add_field(name='Current Population', value=f'This is a {server_pop.lower()} pop server', inline=True)
     embed.add_field(name='Connected Realms', value=server_string, inline=False)
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcolored'
                             'finishedsmall.png')
-    embed.set_footer(text=footer)
+    embed.set_footer(text=f'{footer} {datetime.now()}')
     await ctx.channel.send(embed=embed)
 
     time.sleep(.25)
