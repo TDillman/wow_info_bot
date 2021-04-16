@@ -153,6 +153,7 @@ async def summary(ctx, arg):
         # Send embed, delete message
         await ctx.author.send(embed=embed)
         await ctx.message.delete()
+        print(ctx.channel.name)
 
     except KeyError:
         await ctx.author.send(
