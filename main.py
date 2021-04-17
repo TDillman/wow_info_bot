@@ -380,7 +380,7 @@ async def on_message(ctx):
 
     def print_to_console():
         print(f'{datetime.now()}: {ctx.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
-              f'{ctx.content} in the #{ctx.channel.name} channel')
+              f'"{ctx.content}" in the #{ctx.channel.name} channel')
 
     if '!scrumpy' in ctx.content.lower():
         await ctx.channel.send('Thinks your bags are awful')
