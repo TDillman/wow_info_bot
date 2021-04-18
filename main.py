@@ -431,8 +431,10 @@ async def on_message(ctx):
         print_to_console()
     if 'listen here you little shit' in ctx.content.lower():
         await ctx.channel.send(random.choice(shit_list))
+        print_to_console()
     if '!candercane' in ctx.content.lower():
         await ctx.channel.send('https://giphy.com/gifs/angry-mad-anger-l1J9u3TZfpmeDLkD6')
+        print_to_console()
 
     # Without the following line, the bot gets stuck and won't process commands
     await bot.process_commands(ctx)
