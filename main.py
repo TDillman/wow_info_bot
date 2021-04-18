@@ -4,6 +4,7 @@ import nest_asyncio
 import time
 import os
 import logging
+import random
 
 from discord.ext import commands
 from blizzardapi import BlizzardApi
@@ -382,6 +383,11 @@ async def on_message(ctx):
         print(f'{datetime.now()}: {ctx.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
               f'"{ctx.content}" in the #{ctx.channel.name} channel')
 
+    shit_list = ['https://i.pinimg.com/originals/ef/a6/48/efa648c67f3cb05287ded99612af130f.png',
+                 'https://i.kym-cdn.com/entries/icons/original/000/017/372/ClmrSzk.jpg.png',
+                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAuOPyTLmaoq6hrHNNUnNzzk9_OeRtpLX80g&usqp=CAU',
+                 'https://i.kym-cdn.com/photos/images/facebook/000/917/464/752.jpg']
+
     if '!scrumpy' in ctx.content.lower():
         await ctx.channel.send('Thinks your bags are awful')
         print_to_console()
@@ -423,6 +429,10 @@ async def on_message(ctx):
         await ctx.channel.send(
             'https://tenor.com/view/james-franco-fuck-that-dude-fuckoff-annoyed-annoying-gif-11146686')
         print_to_console()
+    if 'listen here you little shit' in ctx.content.lower():
+        await ctx.channel.send(random.choice(shit_list))
+    if '!candercane' in ctx.content.lower():
+        await ctx.channel.send('https://giphy.com/gifs/angry-mad-anger-l1J9u3TZfpmeDLkD6')
 
     # Without the following line, the bot gets stuck and won't process commands
     await bot.process_commands(ctx)
