@@ -366,7 +366,7 @@ async def custom(ctx):
 
     await ctx.author.send(
         'Custom commands: \n\n!scrumpy\n!golfclap\n!spooky\n!whatever\n!cool\n!myst\n!beylock\n!flex\n!happybirthday'
-        '\n!magic\n!lynkz\n!calendar'
+        '\n!magic\n!lynkz\n!calendar\n!candercane'
     )
 
     time.sleep(.25)
