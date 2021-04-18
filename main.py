@@ -386,7 +386,11 @@ async def on_message(ctx):
     shit_list = ['https://i.pinimg.com/originals/ef/a6/48/efa648c67f3cb05287ded99612af130f.png',
                  'https://i.kym-cdn.com/entries/icons/original/000/017/372/ClmrSzk.jpg.png',
                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAuOPyTLmaoq6hrHNNUnNzzk9_OeRtpLX80g&usqp=CAU',
-                 'https://i.kym-cdn.com/photos/images/facebook/000/917/464/752.jpg']
+                 'https://i.kym-cdn.com/photos/images/facebook/000/917/464/752.jpg',
+                 'https://memegenerator.net/img/instances/40808454/listen-here-you-little-shit.jpg',
+                 'https://ih1.redbubble.net/image.1045539425.2307/poster,840x830,f8f8f8-pad,1000x1000,f8f8f8.jpg',
+                 'https://memegenerator.net/img/instances/71923924/listen-here-you-little-shit.jpg',
+                 'https://pics.ballmemes.com/listen-here-you-little-shit-8006247.png']
 
     if '!scrumpy' in ctx.content.lower():
         await ctx.channel.send('Thinks your bags are awful')
