@@ -304,6 +304,7 @@ async def status(ctx):
 
     server_status = server['status']['name']
     server_pop = server['population']['name']
+    server_queue = server['has_queue']
 
     connections_list = [server['realms'][x]['name'] for x in range(len(server['realms']))]
 
@@ -315,9 +316,14 @@ async def status(ctx):
     server_string = ', '.join(str(name) for name in connections_list)
 
     embed = discord.Embed(title='Arygos', color=status_color)
-    embed.add_field(name='Current Status', value=f'Server is currently {server_status}', inline=True)
-    embed.add_field(name='Current Population', value=f'This is a {server_pop.lower()} pop server', inline=True)
+    embed.add_field(name='Current Status', value=f'Server is currently {server_status.lower()}', inline=True)
+    if server_pop == 'Offline':
+        embed.add_field(name='Current Population', value=f'This server is currently {server_pop.lower()}')
+    else:
+        embed.add_field(name='Current Population', value=f'This is a {server_pop.lower()} pop server', inline=True)
     embed.add_field(name='Connected Realms', value=server_string, inline=False)
+    if server_queue:
+        embed.add_field(name='Queue Active', value='Server has a login queue')
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcolored'
                             'finishedsmall.png')
     embed.set_footer(text=f'{footer} {datetime.now()}')
