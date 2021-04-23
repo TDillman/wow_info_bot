@@ -9,6 +9,7 @@ import random
 from discord.ext import commands
 from blizzardapi import BlizzardApi
 from datetime import datetime
+from dataclasses import dataclass, field
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -56,7 +57,6 @@ async def summary(ctx, arg):
     if ctx.author == bot.user:
         return
     try:
-        footer = f'Might Infobot by Beylock-Arygos\nCommand executed at {datetime.now()}'
         print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
               f'{ctx.message.content} in the #{ctx.channel.name} channel')
 
@@ -80,20 +80,55 @@ async def summary(ctx, arg):
         character_equipment_object = api_client.wow.profile.get_character_equipment_summary("us", "en_US", server_slug,
                                                                                             character_name)
 
+        # Raider.io stats
+        raider_io_api_url = (
+            f'https://raider.io/api/v1/characters/profile?region=us&realm={server_slug}'
+            f'&name={character_name}&fields=mythic_plus_scores_by_season%3Acurrent'
+        )
+        raider_io_object = requests.get(raider_io_api_url).json()
+
+        @dataclass
+        class Character:
+            """Object for a player's character attributes"""
+            name: str = character_gear_object['name']
+            player_class: str = character_gear_object['character_class']['name']
+            level: int = character_gear_object['level']
+            race: str = character_gear_object['race']['name']
+            spec: str = character_gear_object['active_spec']['name']
+            guild: str = character_gear_object['guild']['name']
+            faction: str = character_gear_object['faction']['name']
+            realm: str = character_gear_object['realm']['name']
+            ilvl_avg: int = character_gear_object['average_item_level']
+            ilvl_equip: int = character_gear_object['equipped_item_level']
+            cov_name: str = character_gear_object['covenant_progress']['chosen_covenant']['name']
+            cov_renown: int = character_gear_object['covenant_progress']['renown_level']
+            inset_image: str = character_image_object['assets'][1]['value']
+            avatar_image: str = character_image_object['assets'][0]['value']
+            full_image_bg: str = character_image_object['assets'][2]['value']
+            full_image_no_bg: str = character_image_object['assets'][3]['value']
+            class_color: str = hex(discord_embed_color_dict[character_gear_object['character_class']['name']])
+            overall_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['all']
+            dps_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['dps']
+            healer_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['healer']
+            tank_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['tank']
+            raider_io_url: str = f'https://raider.io/characters/us/{server_slug}/{character_name}'
+            armory_url: str = f'https://worldofwarcraft.com/en-us/character/us/{server_slug}/{character_name}'
+            warcraftlogs_url: str = f'https://www.warcraftlogs.com/character/us/{server_slug}/{character_name}'
+            achievement_points: int = f'{character_gear_object["achievement_points"]:,}'
+            last_login: str = datetime.fromtimestamp(
+                (character_gear_object['last_login_timestamp']) / 1000).strftime('%Y-%m-%d %H:%M:%S')
+
+        character = Character()
+
         character_inset_image = character_image_object['assets'][1]['value']
 
-        name_string = f"{character_gear_object['name']}, level {character_gear_object['level']} " \
-                      f"{character_gear_object['race']['name']} {character_gear_object['active_spec']['name']} " \
-                      f"{character_gear_object['character_class']['name']}"
+        name_string = f"{character.name}, level {character.level} {character.race} {character.spec} {character.player_class}"
 
-        guild_string = f"{character_gear_object['guild']['name']}\n{character_gear_object['faction']['name']} on " \
-                       f"{character_gear_object['realm']['name']}"
+        guild_string = f"{character.guild}\n{character.faction} on {character.realm}"
 
-        ilvl_string = f"Average Item Level: {character_gear_object['average_item_level']}\nEquipped Item Level: " \
-                      f"{character_gear_object['equipped_item_level']}"
+        ilvl_string = f"Average Item Level: {character.ilvl_avg}\nEquipped Item Level: {character.ilvl_equip}"
 
-        covenant_string = f"{character_gear_object['covenant_progress']['chosen_covenant']['name']}\nRenown " \
-                          f"{character_gear_object['covenant_progress']['renown_level']}"
+        covenant_string = f"{character.cov_name}\nRenown {character.cov_renown}"
 
         enchant_string = ''
 
@@ -114,40 +149,34 @@ async def summary(ctx, arg):
                 legendary_string = (f"{character_equipment_object['equipped_items'][x]['name']}\n"
                                     f"{character_equipment_object['equipped_items'][x]['level']['display_string']}")
 
-        # Raider.io stats
-        raider_io_api_url = (
-            f'https://raider.io/api/v1/characters/profile?region=us&realm={server_slug}'
-            f'&name={character_name}&fields=mythic_plus_scores_by_season%3Acurrent'
-        )
-        raider_io_api_response = requests.get(raider_io_api_url).json()
-
-        overall_io_rank = raider_io_api_response['mythic_plus_scores_by_season'][0]['scores']['all']
-        dps_io_rank = raider_io_api_response['mythic_plus_scores_by_season'][0]['scores']['dps']
-        healer_io_rank = raider_io_api_response['mythic_plus_scores_by_season'][0]['scores']['healer']
-        tank_io_rank = raider_io_api_response['mythic_plus_scores_by_season'][0]['scores']['tank']
-
-        raider_io_string = f'Overall rating: {overall_io_rank}\nDPS rating: {dps_io_rank}\nHealer rating: ' \
-                           f'{healer_io_rank}\nTank rating: {tank_io_rank}'
+        raider_io_string = f'Overall rating: {character.overall_io_rating}\n' \
+                           f'DPS rating: {character.dps_io_rating}\n' \
+                           f'Healer rating: {character.healer_io_rating}\n' \
+                           f'Tank rating: {character.tank_io_rating}'
 
         discord_embed_color = None
         for char_class, color_value in discord_embed_color_dict.items():
             if character_gear_object['character_class']['name'] == char_class:
                 discord_embed_color = color_value
 
-        raider_io_url = f'https://raider.io/characters/us/{server_slug}/{character_name}'
-        armory_url = f'https://worldofwarcraft.com/en-us/character/us/{server_slug}/{character_name}'
-        wcl_url = f'https://www.warcraftlogs.com/character/us/{server_slug}/{character_name}'
-
         # Create embed in Discord
         embed = discord.Embed(title=name_string, color=discord_embed_color)
         embed.set_author(name="Character Summary")
-        embed.description = f'[Raider.io]({raider_io_url}) | [Armory]({armory_url}) | [Warcraft Logs]({wcl_url})'
+        embed.description = f'[Raider.io]({character.raider_io_url}) | [Armory]({character.armory_url})' \
+                            f' | [Warcraft Logs]({character.warcraftlogs_url})'
         embed.add_field(name="Gear", value=ilvl_string, inline=True)
         embed.add_field(name="Guild", value=guild_string, inline=True)
         embed.add_field(name="Covenant", value=covenant_string, inline=True)
         embed.add_field(name="Enchants", value=enchant_string, inline=True)
         embed.add_field(name="Legendary", value=legendary_string, inline=True)
         embed.add_field(name="Raider.io Ratings", value=raider_io_string, inline=False)
+        embed.add_field(name="Achievement Points", value=character.achievement_points, inline=True)
+        embed.add_field(name="Last login", value=character.last_login, inline=True)
+        embed.add_field(name="Character images", value=f'[Avatar]({character.inset_image})\n'
+                                                       f'[Headshot]({character.avatar_image})\n'
+                                                       f'[Full body with background]({character.full_image_bg})\n'
+                                                       f'[Full body no background]({character.full_image_no_bg})',
+                        inline=False)
         embed.set_thumbnail(url=character_inset_image)
         embed.set_footer(text=f'{footer} {datetime.now()}')
 
@@ -157,7 +186,7 @@ async def summary(ctx, arg):
 
     except KeyError:
         await ctx.author.send(
-            f"Unable to find character {character_name.capitalize()}-{server_slug.capitalize()}. Check spelling "
+            f"Unable to find character {character.name}-{character.realm}. Check spelling "
             f"or wait til Blizzard sorts out their Armory problems")
         print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
               f'{ctx.message.content}. Error.')
@@ -300,30 +329,40 @@ async def status(ctx):
     if ctx.author == bot.user:
         return
 
-    server = api_client.wow.game_data.get_connected_realm("us", "en_US", 99)
+    server_object = api_client.wow.game_data.get_connected_realm("us", "en_US", 99)
 
-    server_status = server['status']['name']
-    server_pop = server['population']['name']
-    server_queue = server['has_queue']
+    @dataclass
+    class Server:
+        """Object to store data about Arygos for status updates"""
+        status: str = server_object['status']['name']
+        population: str = server_object['population']['name']
+        has_queue: bool = server_object['has_queue']
+        region: str = server_object['realms'][0]['region']['name']
+        country: str = server_object['realms'][0]['category']
+        timezone: str = server_object['realms'][0]['timezone']
+        connections: list = field(default_factory=lambda: [server_object['realms'][x]['name'] for x in
+                                                           range(len(server_object['realms']))])
+        name: str = 'Arygos'
 
-    connections_list = [server['realms'][x]['name'] for x in range(len(server['realms']))]
+    server = Server()
 
-    if server_status == "Up":
+    if server.status == "Up":
         status_color = 0x00ff00  # Green for up
     else:
         status_color = 0xff0000  # Red for down
 
-    server_string = ', '.join(str(name) for name in connections_list)
+    server_string = ', '.join(str(name) for name in server.connections)
 
     embed = discord.Embed(title='Arygos', color=status_color)
-    embed.add_field(name='Current Status', value=f'Server is currently {server_status.lower()}', inline=True)
-    if server_pop == 'Offline':
-        embed.add_field(name='Current Population', value=f'This server is currently {server_pop.lower()}')
+    embed.add_field(name='Current Status', value=f'Server is currently {server.status}', inline=True)
+    if server.population == 'Offline':
+        embed.add_field(name='Current Population', value=f'This server is currently {server.population}')
     else:
-        embed.add_field(name='Current Population', value=f'This is a {server_pop.lower()} pop server', inline=True)
+        embed.add_field(name='Current Population', value=f'This is a {server.population} pop server', inline=True)
     embed.add_field(name='Connected Realms', value=server_string, inline=False)
-    if server_queue:
+    if server.has_queue:
         embed.add_field(name='Queue Active', value='Server has a login queue')
+    embed.add_field(name="Timezone", value=server.timezone, inline=True)
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcolored'
                             'finishedsmall.png')
     embed.set_footer(text=f'{footer} {datetime.now()}')
