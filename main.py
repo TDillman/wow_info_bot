@@ -120,8 +120,6 @@ async def summary(ctx, arg):
 
         character = Character()
 
-        character_inset_image = character_image_object['assets'][1]['value']
-
         name_string = f"{character.name}, level {character.level} {character.race} {character.spec} {character.player_class}"
 
         guild_string = f"{character.guild}\n{character.faction} on {character.realm}"
@@ -131,7 +129,6 @@ async def summary(ctx, arg):
         covenant_string = f"{character.cov_name}\nRenown {character.cov_renown}"
 
         enchant_string = ''
-
         for x in range(len(character_equipment_object['equipped_items'])):
             try:
                 enchant_string += f"{character_equipment_object['equipped_items'][x]['enchantments'][0]['source_item']['name']}\n"
@@ -154,10 +151,7 @@ async def summary(ctx, arg):
                            f'Healer rating: {character.healer_io_rating}\n' \
                            f'Tank rating: {character.tank_io_rating}'
 
-        discord_embed_color = None
-        for char_class, color_value in discord_embed_color_dict.items():
-            if character_gear_object['character_class']['name'] == char_class:
-                discord_embed_color = color_value
+        discord_embed_color = discord_embed_color_dict[character.player_class]
 
         # Create embed in Discord
         embed = discord.Embed(title=name_string, color=discord_embed_color)
@@ -177,7 +171,7 @@ async def summary(ctx, arg):
                                                        f'[Full body with background]({character.full_image_bg})\n'
                                                        f'[Full body no background]({character.full_image_no_bg})',
                         inline=False)
-        embed.set_thumbnail(url=character_inset_image)
+        embed.set_thumbnail(url=character.inset_image)
         embed.set_footer(text=f'{footer} {datetime.now()}')
 
         # Send embed, delete message
