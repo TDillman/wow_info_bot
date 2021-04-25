@@ -481,7 +481,7 @@ async def on_message(ctx):
     if '!wat' in ctx.content.lower():
         await ctx.channel.send('https://imgur.com/a/PnB5eFk')
         print_to_console()
-    if '!thisisfine' or 'this is fine' in ctx.content.lower():
+    if '!thisisfine' in ctx.content.lower() or 'this is fine' in ctx.content.lower():
         await ctx.channel.send('https://imgur.com/a/uDAO5In')
         print_to_console()
     if '!pirate' in ctx.content.lower():
