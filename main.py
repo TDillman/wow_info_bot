@@ -405,7 +405,7 @@ async def custom(ctx):
 
     await ctx.author.send(
         'Custom commands: \n\n!scrumpy\n!golfclap\n!spooky\n!whatever\n!cool\n!myst\n!beylock\n!flex\n!happybirthday'
-        '\n!magic\n!lynkz\n!calendar\n!candercane'
+        '\n!magic\n!lynkz\n!calendar\n!candercane\n!pirate\n!thisisfine\n!wat'
     )
 
     time.sleep(.25)
@@ -455,7 +455,7 @@ async def on_message(ctx):
         await ctx.channel.send('https://tenor.com/view/is-it-though-thor-smile-gif-13334930')
         print_to_console()
     if '!beylock' in ctx.content.lower():
-        await ctx.channel.send('Oh boy! Picante!')
+        await ctx.channel.send('https://imgur.com/a/xux2u6p')
         print_to_console()
     if 'flex' in ctx.content.lower():
         await ctx.channel.send(
@@ -477,6 +477,15 @@ async def on_message(ctx):
         print_to_console()
     if '!candercane' in ctx.content.lower():
         await ctx.channel.send('https://giphy.com/gifs/angry-mad-anger-l1J9u3TZfpmeDLkD6')
+        print_to_console()
+    if '!wat' in ctx.content.lower():
+        await ctx.channel.send('https://imgur.com/a/PnB5eFk')
+        print_to_console()
+    if '!thisisfine' or 'this is fine' in ctx.content.lower():
+        await ctx.channel.send('https://imgur.com/a/uDAO5In')
+        print_to_console()
+    if '!pirate' in ctx.content.lower():
+        await ctx.channel.send('https://imgur.com/a/TDot4Ba')
         print_to_console()
 
     # Without the following line, the bot gets stuck and won't process commands
