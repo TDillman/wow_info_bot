@@ -83,7 +83,7 @@ async def summary(ctx, arg):
         # Raider.io stats
         raider_io_api_url = (
             f'https://raider.io/api/v1/characters/profile?region=us&realm={server_slug}'
-            f'&name={character_name}&fields=mythic_plus_scores_by_season%3Acurrent'
+            f'&name={character_name}&fields=mythic_plus_scores_by_season%3Acurrent%2Craid_progression'
         )
         raider_io_object = requests.get(raider_io_api_url).json()
 
@@ -111,6 +111,7 @@ async def summary(ctx, arg):
             dps_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['dps']
             healer_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['healer']
             tank_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['tank']
+            nathria_raid_prog: str = raider_io_object['raid_progression']['castle-nathria']['summary']
             raider_io_url: str = f'https://raider.io/characters/us/{server_slug}/{character_name}'
             armory_url: str = f'https://worldofwarcraft.com/en-us/character/us/{server_slug}/{character_name}'
             warcraftlogs_url: str = f'https://www.warcraftlogs.com/character/us/{server_slug}/{character_name}'
@@ -146,10 +147,12 @@ async def summary(ctx, arg):
                 legendary_string = (f"{character_equipment_object['equipped_items'][x]['name']}\n"
                                     f"{character_equipment_object['equipped_items'][x]['level']['display_string']}")
 
-        raider_io_string = f'Overall rating: {character.overall_io_rating}\n' \
-                           f'DPS rating: {character.dps_io_rating}\n' \
-                           f'Healer rating: {character.healer_io_rating}\n' \
-                           f'Tank rating: {character.tank_io_rating}'
+        raider_io_mplus_string = f'Overall rating: {character.overall_io_rating}\n' \
+                                 f'DPS rating: {character.dps_io_rating}\n' \
+                                 f'Healer rating: {character.healer_io_rating}\n' \
+                                 f'Tank rating: {character.tank_io_rating}'
+
+        raider_io_raid_string = f'Castle Nathria: {character.nathria_raid_prog}'
 
         discord_embed_color = discord_embed_color_dict[character.player_class]
 
@@ -163,7 +166,8 @@ async def summary(ctx, arg):
         embed.add_field(name="Covenant", value=covenant_string, inline=True)
         embed.add_field(name="Enchants", value=enchant_string, inline=True)
         embed.add_field(name="Legendary", value=legendary_string, inline=True)
-        embed.add_field(name="Raider.io Ratings", value=raider_io_string, inline=False)
+        embed.add_field(name="Raider.io Ratings\nCurrent Season", value=raider_io_mplus_string, inline=False)
+        embed.add_field(name='Raid Progression', value=raider_io_raid_string, inline=True)
         embed.add_field(name="Achievement Points", value=character.achievement_points, inline=True)
         embed.add_field(name="Last login", value=character.last_login, inline=True)
         embed.add_field(name="Character images", value=f'[Avatar]({character.inset_image})\n'
