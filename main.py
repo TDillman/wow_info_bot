@@ -164,12 +164,12 @@ async def summary(ctx, arg):
         embed.add_field(name="Gear", value=ilvl_string, inline=True)
         embed.add_field(name="Guild", value=guild_string, inline=True)
         embed.add_field(name="Covenant", value=covenant_string, inline=True)
-        embed.add_field(name="Enchants", value=enchant_string, inline=True)
-        embed.add_field(name="Legendary", value=legendary_string, inline=True)
-        embed.add_field(name="Raider.io Ratings\nCurrent Season", value=raider_io_mplus_string, inline=False)
         embed.add_field(name='Raid Progression', value=raider_io_raid_string, inline=True)
-        embed.add_field(name="Achievement Points", value=character.achievement_points, inline=True)
-        embed.add_field(name="Last login", value=character.last_login, inline=True)
+        embed.add_field(name="Legendary", value=legendary_string, inline=True)
+        embed.add_field(name="Raider.io Ratings\nCurrent Season", value=raider_io_mplus_string, inline=True)
+        embed.add_field(name="Enchants", value=enchant_string, inline=True)
+        embed.add_field(name="Achievement Points", value=character.achievement_points, inline=False)
+        embed.add_field(name="Last login", value=character.last_login, inline=False)
         embed.add_field(name="Character images", value=f'[Avatar]({character.inset_image})\n'
                                                        f'[Headshot]({character.avatar_image})\n'
                                                        f'[Full body with background]({character.full_image_bg})\n'
