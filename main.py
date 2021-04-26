@@ -123,9 +123,10 @@ async def summary(ctx, arg):
 
         name_string = f"{character.name}, level {character.level} {character.race} {character.spec} {character.player_class}"
 
-        guild_string = f"{character.guild}\n{character.faction} on {character.realm}"
+        guild_string = f"[{character.guild}](https://worldofwarcraft.com/en-us/guild/us/{server_slug}/{character.guild})" \
+                       f"\n{character.faction} on [{character.realm}]"
 
-        ilvl_string = f"Average Item Level: {character.ilvl_avg}\nEquipped Item Level: {character.ilvl_equip}"
+        ilvl_string = f"Average ilvl: {character.ilvl_avg}\nEquipped ilvl: {character.ilvl_equip}"
 
         covenant_string = f"{character.cov_name}\nRenown {character.cov_renown}"
 
@@ -152,7 +153,7 @@ async def summary(ctx, arg):
                                  f'Healer rating: {character.healer_io_rating}\n' \
                                  f'Tank rating: {character.tank_io_rating}'
 
-        raider_io_raid_string = f'Castle Nathria: {character.nathria_raid_prog}'
+        raider_io_raid_string = f'Nathria: {character.nathria_raid_prog}'
 
         discord_embed_color = discord_embed_color_dict[character.player_class]
 
@@ -169,7 +170,7 @@ async def summary(ctx, arg):
         embed.add_field(name="Raider.io Ratings\nCurrent Season", value=raider_io_mplus_string, inline=True)
         embed.add_field(name="Enchants", value=enchant_string, inline=True)
         embed.add_field(name="Achievement Points", value=character.achievement_points, inline=False)
-        embed.add_field(name="Last login", value=character.last_login, inline=False)
+        embed.add_field(name="Last login", value=character.last_login, inline=True)
         embed.add_field(name="Character images", value=f'[Avatar]({character.inset_image})\n'
                                                        f'[Headshot]({character.avatar_image})\n'
                                                        f'[Full body with background]({character.full_image_bg})\n'
