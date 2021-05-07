@@ -372,6 +372,12 @@ async def status(ctx):
 
 
 @bot.command()
+async def talk(ctx, arg):
+    await ctx.message.delete()
+    await ctx.channel.send(arg)
+
+
+@bot.command()
 async def sim(ctx):
     pass
 
