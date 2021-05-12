@@ -416,7 +416,7 @@ async def custom(ctx):
 
     await ctx.author.send(
         'Custom commands: \n\n!scrumpy\n!golfclap\n!spooky\n!whatever\n!cool\n!myst\n!beylock\n!flex\n!happybirthday'
-        '\n!magic\n!lynkz\n!calendar\n!candercane\n!pirate\n!thisisfine\n!wat\n!justice\n!thisisfine\n!pirate'
+        '\n!magic\n!lynkz\n!calendar\n!candercane\n!pirate\n!thisisfine\n!wat\n!justice\n!thisisfine\n!pirate\n!suckit'
     )
 
     time.sleep(.25)
@@ -500,6 +500,9 @@ async def on_message(ctx):
         print_to_console()
     if '!justice' in ctx.content.lower():
         await ctx.channel.send('https://gfycat.com/adorablespotlesshammerheadbird')
+        print_to_console()
+    if '!suckit' in ctx.content.lower() or 'suck it' in ctx.content.lower():
+        await ctx.channel.send('https://imgur.com/Fy6RhWI')
         print_to_console()
 
     # Without the following line, the bot gets stuck and won't process commands
