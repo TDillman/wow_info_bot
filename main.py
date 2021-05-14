@@ -5,6 +5,7 @@ import time
 import os
 import logging
 import random
+import json
 
 from discord.ext import commands
 from blizzardapi import BlizzardApi
@@ -71,14 +72,32 @@ async def summary(ctx, arg):
             character_name = name_list[0].lower()
             server_slug = name_list[1].lower().replace("'", "").replace(" ", "")
 
-        character_gear_object = api_client.wow.profile.get_character_profile_summary("us", "en_US", server_slug,
-                                                                                     character_name)
+        try:
+            with open(f'/home/ubuntu/might_bot/gear/{character_name.capitalize()}.json', 'r') as gear_file:
+                character_gear_object = json.loads(gear_file.read())
+                print(f'\tGrabbing from file: /home/ubuntu/might_bot/gear/{character_name.capitalize()}.json')
+        except:
+            character_gear_object = api_client.wow.profile.get_character_profile_summary("us", "en_US", server_slug,
+                                                                                         character_name)
+            print('\tGear: pulling from Armory')
 
-        character_image_object = api_client.wow.profile.get_character_media_summary("us", "en_US", server_slug,
-                                                                                    character_name)
+        try:
+            with open(f'/home/ubuntu/might_bot/media/{character_name.capitalize()}.json', 'r') as media_file:
+                character_image_object = json.loads(media_file.read())
+                print(f'\tGrabbing from file: /home/ubuntu/might_bot/media/{character_name.capitalize()}.json')
+        except:
+            character_image_object = api_client.wow.profile.get_character_media_summary("us", "en_US", server_slug,
+                                                                                        character_name)
+            print('\tImage: pulling from Armory')
 
-        character_equipment_object = api_client.wow.profile.get_character_equipment_summary("us", "en_US", server_slug,
-                                                                                            character_name)
+        try:
+            with open(f'/home/ubuntu/might_bot/equipment/{character_name.capitalize()}.json', 'r') as equipment_file:
+                character_equipment_object = json.loads(equipment_file.read())
+                print(f'\tGrabbing from file: /home/ubuntu/might_bot/equipment/{character_name.capitalize()}.json')
+        except:
+            character_equipment_object = api_client.wow.profile.get_character_equipment_summary("us", "en_US", server_slug,
+                                                                                                character_name)
+            print('\tEquipment: pulling from Armory')
 
         # Raider.io stats
         raider_io_api_url = (
