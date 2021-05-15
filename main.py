@@ -121,6 +121,15 @@ async def summary(ctx, arg):
             raider_io_tank = "Unavailable"
             raider_io_nathria = "Unavailable"
 
+        try:
+            covenant_name = character_gear_object['covenant_progress']['chosen_covenant']['name']
+            covenant_renown = character_gear_object['covenant_progress']['renown_level']
+        except:
+            covenant_name = "None selected"
+            covenant_renown = 0
+
+
+
         @dataclass
         class Character:
             """Object for a player's character attributes"""
@@ -134,8 +143,8 @@ async def summary(ctx, arg):
             realm: str = character_gear_object['realm']['name']
             ilvl_avg: int = character_gear_object['average_item_level']
             ilvl_equip: int = character_gear_object['equipped_item_level']
-            cov_name: str = character_gear_object['covenant_progress']['chosen_covenant']['name']
-            cov_renown: int = character_gear_object['covenant_progress']['renown_level']
+            cov_name: str = covenant_name
+            cov_renown: int = covenant_renown
             inset_image: str = character_image_object['assets'][1]['value']
             avatar_image: str = character_image_object['assets'][0]['value']
             full_image_bg: str = character_image_object['assets'][2]['value']
