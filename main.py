@@ -111,28 +111,87 @@ async def summary(ctx, arg):
             with open(f'/home/ubuntu/might_bot/gear/{character_name.capitalize()}.json', 'r') as gear_file:
                 character_gear_object = json.loads(gear_file.read())
                 print(f'\tGear: Grabbing from file: /home/ubuntu/might_bot/gear/{character_name.capitalize()}.json')
+                character_name_object = character_gear_object['name']
+                character_player_class_object = character_gear_object['character_class']['name']
+                character_level_object = character_gear_object['level']
+                character_race_object = character_gear_object['race']['name']
+                character_spec_object = character_gear_object['active_spec']['name']
+                character_faction_object = character_gear_object['faction']['name']
+                character_realm_object = character_gear_object['realm']['name']
+                character_ilvl_avg_object = character_gear_object['average_item_level']
+                character_ilvl_equip_object = character_gear_object['equipped_item_level']
+                character_class_color_object = hex(discord_embed_color_dict[character_gear_object['character_class']['name']])
+                character_ach_points_object = f'{character_gear_object["achievement_points"]:,}'
+                character_last_login_object = datetime.fromtimestamp(
+                (character_gear_object['last_login_timestamp']) / 1000).strftime('%Y-%m-%d %H:%M:%S')
         except:
-            character_gear_object = api_client.wow.profile.get_character_profile_summary("us", "en_US", server_slug,
-                                                                                         character_name)
-            print('\tGear: Pulling from Armory')
+            try:
+                character_gear_object = api_client.wow.profile.get_character_profile_summary("us", "en_US", server_slug,
+                                                                                             character_name)
+                print('\tGear: Pulling from Armory')
+                character_name_object = character_gear_object['name']
+                character_player_class_object = character_gear_object['character_class']['name']
+                character_level_object = character_gear_object['level']
+                character_race_object = character_gear_object['race']['name']
+                character_spec_object = character_gear_object['active_spec']['name']
+                character_faction_object = character_gear_object['faction']['name']
+                character_realm_object = character_gear_object['realm']['name']
+                character_ilvl_avg_object = character_gear_object['average_item_level']
+                character_ilvl_equip_object = character_gear_object['equipped_item_level']
+                character_class_color_object = hex(discord_embed_color_dict[character_gear_object['character_class']['name']])
+                character_ach_points_object = f'{character_gear_object["achievement_points"]:,}'
+                character_last_login_object = datetime.fromtimestamp(
+                    (character_gear_object['last_login_timestamp']) / 1000).strftime('%Y-%m-%d %H:%M:%S')
+            except:
+                print('\t\tCharacter not found')
+                character_name_object = character_name.capitalize()
+                character_player_class_object = 'Character not found'
+                character_level_object = 0
+                character_race_object = 'Character not found'
+                character_spec_object = 'Character not found'
+                character_faction_object = 'Character not found'
+                character_realm_object = server_slug.capitalize()
+                character_ilvl_avg_object = 0
+                character_ilvl_equip_object = 0
+                character_class_color_object = 0
+                character_ach_points_object = 0
+                character_last_login_object = 'Character not found'
 
         try:
             with open(f'/home/ubuntu/might_bot/media/{character_name.capitalize()}.json', 'r') as media_file:
                 character_image_object = json.loads(media_file.read())
                 print(f'\tImage: Grabbing from file: /home/ubuntu/might_bot/media/{character_name.capitalize()}.json')
+                character_image_object_inset = character_image_object['assets'][1]['value']
+                character_image_object_avatar = character_image_object['assets'][0]['value']
+                character_image_object_full_bg = character_image_object['assets'][2]['value']
+                character_image_object_full_no_bg = character_image_object['assets'][3]['value']
         except:
-            character_image_object = api_client.wow.profile.get_character_media_summary("us", "en_US", server_slug,
-                                                                                        character_name)
-            print('\tImage: Pulling from Armory')
+            try:
+                character_image_object = api_client.wow.profile.get_character_media_summary("us", "en_US", server_slug,
+                                                                                            character_name)
+                print('\tImage: Pulling from Armory')
+                character_image_object_inset = character_image_object['assets'][1]['value']
+                character_image_object_avatar = character_image_object['assets'][0]['value']
+                character_image_object_full_bg = character_image_object['assets'][2]['value']
+                character_image_object_full_no_bg = character_image_object['assets'][3]['value']
+            except:
+                print('\t\tCharacter not found')
+                character_image_object_inset = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg'
+                character_image_object_avatar = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg'
+                character_image_object_full_bg = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg'
+                character_image_object_full_no_bg = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg'
 
         try:
             with open(f'/home/ubuntu/might_bot/equipment/{character_name.capitalize()}.json', 'r') as equipment_file:
                 character_equipment_object = json.loads(equipment_file.read())
                 print(f'\tEquipment: Grabbing from file: /home/ubuntu/might_bot/equipment/{character_name.capitalize()}.json')
         except:
-            character_equipment_object = api_client.wow.profile.get_character_equipment_summary("us", "en_US", server_slug,
-                                                                                                character_name)
-            print('\tEquipment: Pulling from Armory')
+            try:
+                character_equipment_object = api_client.wow.profile.get_character_equipment_summary("us", "en_US", server_slug,
+                                                                                                    character_name)
+                print('\tEquipment: Pulling from Armory')
+            except:
+                print('\t\tCharacter not found')
 
         # Raider.io stats
         raider_io_api_url = (
@@ -172,23 +231,23 @@ async def summary(ctx, arg):
         @dataclass
         class Character:
             """Object for a player's character attributes"""
-            name: str = character_gear_object['name']
-            player_class: str = character_gear_object['character_class']['name']
-            level: int = character_gear_object['level']
-            race: str = character_gear_object['race']['name']
-            spec: str = character_gear_object['active_spec']['name']
+            name: str = character_name_object
+            player_class: str = character_player_class_object
+            level: int = character_level_object
+            race: str = character_race_object
+            spec: str = character_spec_object
             guild: str = char_guild
-            faction: str = character_gear_object['faction']['name']
-            realm: str = character_gear_object['realm']['name']
-            ilvl_avg: int = character_gear_object['average_item_level']
-            ilvl_equip: int = character_gear_object['equipped_item_level']
+            faction: str = character_faction_object
+            realm: str = character_realm_object
+            ilvl_avg: int = character_ilvl_avg_object
+            ilvl_equip: int = character_ilvl_equip_object
             cov_name: str = covenant_name
             cov_renown: int = covenant_renown
-            inset_image: str = character_image_object['assets'][1]['value']
-            avatar_image: str = character_image_object['assets'][0]['value']
-            full_image_bg: str = character_image_object['assets'][2]['value']
-            full_image_no_bg: str = character_image_object['assets'][3]['value']
-            class_color: str = hex(discord_embed_color_dict[character_gear_object['character_class']['name']])
+            inset_image: str = character_image_object_inset
+            avatar_image: str = character_image_object_avatar
+            full_image_bg: str = character_image_object_full_bg
+            full_image_no_bg: str = character_image_object_full_no_bg
+            class_color: str = character_class_color_object
             overall_io_rating: float = raider_io_overall
             dps_io_rating: float = raider_io_dps
             healer_io_rating: float = raider_io_heal
@@ -197,9 +256,8 @@ async def summary(ctx, arg):
             raider_io_url: str = f'https://raider.io/characters/us/{server_slug}/{character_name}'
             armory_url: str = f'https://worldofwarcraft.com/en-us/character/us/{server_slug}/{character_name}'
             warcraftlogs_url: str = f'https://www.warcraftlogs.com/character/us/{server_slug}/{character_name}'
-            achievement_points: int = f'{character_gear_object["achievement_points"]:,}'
-            last_login: str = datetime.fromtimestamp(
-                (character_gear_object['last_login_timestamp']) / 1000).strftime('%Y-%m-%d %H:%M:%S')
+            achievement_points: int = character_ach_points_object
+            last_login: str = character_last_login_object
 
         character = Character()
 
