@@ -28,6 +28,40 @@ api_client = BlizzardApi(client_id, client_secret)
 
 bot = commands.Bot(command_prefix="!", case_insensitive=True)
 
+shit_list = ['https://i.pinimg.com/originals/ef/a6/48/efa648c67f3cb05287ded99612af130f.png',
+             'https://i.kym-cdn.com/entries/icons/original/000/017/372/ClmrSzk.jpg.png',
+             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAuOPyTLmaoq6hrHNNUnNzzk9_OeRtpLX80g&usqp=CAU',
+             'https://i.kym-cdn.com/photos/images/facebook/000/917/464/752.jpg',
+             'https://memegenerator.net/img/instances/40808454/listen-here-you-little-shit.jpg',
+             'https://ih1.redbubble.net/image.1045539425.2307/poster,840x830,f8f8f8-pad,1000x1000,f8f8f8.jpg',
+             'https://memegenerator.net/img/instances/71923924/listen-here-you-little-shit.jpg',
+             'https://pics.ballmemes.com/listen-here-you-little-shit-8006247.png'
+             ]
+
+command_dict = {
+        '!scrumpy': 'Thinks your bags are awful',
+        '!calendar': '<@267888830634262529> needs to update the calendar!',
+        '!golfclap': 'https://tenor.com/view/charlie-sheen-emilio-estevez-golf-clap-men-at-work-gif-7577611',
+        '!spooky': 'https://img1.cgtrader.com/items/1911482/ca45cf3f32/air-horn-3d-model-max-obj-mtl-3ds-fbx-dxf.jpg',
+        '!whatever': 'https://media.discordapp.net/attachments/765619338337058827/802299499908563024/whatever.gif',
+        '!cool': 'https://tenor.com/view/andy-samberg-brooklyn99-jake-peralta-cool-gif-12063970',
+        'cool cool cool': 'https://tenor.com/view/andy-samberg-brooklyn99-jake-peralta-cool-gif-12063970',
+        '!myst': 'https://tenor.com/view/is-it-though-thor-smile-gif-13334930',
+        '!beylock': 'https://imgur.com/a/xux2u6p',
+        'flex': 'https://cdn.discordapp.com/attachments/676183284123828236/823278892676022353/image0.jpg',
+        '!happybirthday': 'https://giphy.com/gifs/i8htPQwChFOVcpnImq',
+        '!magic': 'https://media.discordapp.net/attachments/676183284123828236/761438362720272394/Kat_Confetti.gif',
+        '!lynkz': 'https://tenor.com/view/james-franco-fuck-that-dude-fuckoff-annoyed-annoying-gif-11146686',
+        'listen here you little shit': random.choice(shit_list),
+        '!candercane': 'https://giphy.com/gifs/angry-mad-anger-l1J9u3TZfpmeDLkD6',
+        '!wat': 'https://imgur.com/a/PnB5eFk',
+        '!thisisfine': 'https://imgur.com/a/uDAO5In',
+        '!pirate': 'https://imgur.com/a/TDot4Ba',
+        '!justice': 'https://gfycat.com/adorablespotlesshammerheadbird',
+        '!suckit': 'https://imgur.com/Fy6RhWI',
+        'suck it': 'https://imgur.com/Fy6RhWI'
+    }
+
 # Set side bar color in Discord embed
 discord_embed_color_dict = {
     'Death Knight': 0xC41E3A,
@@ -128,6 +162,11 @@ async def summary(ctx, arg):
             covenant_name = "None selected"
             covenant_renown = 0
 
+        try:
+            char_guild = character_gear_object['guild']['name']
+        except:
+            char_guild = "None"
+
 
 
         @dataclass
@@ -138,7 +177,7 @@ async def summary(ctx, arg):
             level: int = character_gear_object['level']
             race: str = character_gear_object['race']['name']
             spec: str = character_gear_object['active_spec']['name']
-            guild: str = character_gear_object['guild']['name']
+            guild: str = char_guild
             faction: str = character_gear_object['faction']['name']
             realm: str = character_gear_object['realm']['name']
             ilvl_avg: int = character_gear_object['average_item_level']
@@ -459,16 +498,16 @@ async def custom(ctx):
     print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
           f'{ctx.message.content} in the #{ctx.channel.name} channel')
 
-    await ctx.author.send(
-        'Custom commands: \n\n!scrumpy\n!golfclap\n!spooky\n!whatever\n!cool\n!myst\n!beylock\n!flex\n!happybirthday'
-        '\n!magic\n!lynkz\n!calendar\n!candercane\n!pirate\n!thisisfine\n!wat\n!justice\n!thisisfine\n!pirate\n!suckit'
-    )
+    custom_command_list = list(command_dict.keys())
+    custom_command_list.sort()
+    custom_command_string = "\n".join(custom_command_list)
+
+    await ctx.author.send(custom_command_string)
 
     time.sleep(.25)
     await ctx.message.delete()
 
 
-# There has to be a better way to do this
 @bot.event
 async def on_message(ctx):
     if ctx.author == bot.user:
@@ -478,77 +517,10 @@ async def on_message(ctx):
         print(f'{datetime.now()}: {ctx.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
               f'"{ctx.content}" in the #{ctx.channel.name} channel')
 
-    shit_list = ['https://i.pinimg.com/originals/ef/a6/48/efa648c67f3cb05287ded99612af130f.png',
-                 'https://i.kym-cdn.com/entries/icons/original/000/017/372/ClmrSzk.jpg.png',
-                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAuOPyTLmaoq6hrHNNUnNzzk9_OeRtpLX80g&usqp=CAU',
-                 'https://i.kym-cdn.com/photos/images/facebook/000/917/464/752.jpg',
-                 'https://memegenerator.net/img/instances/40808454/listen-here-you-little-shit.jpg',
-                 'https://ih1.redbubble.net/image.1045539425.2307/poster,840x830,f8f8f8-pad,1000x1000,f8f8f8.jpg',
-                 'https://memegenerator.net/img/instances/71923924/listen-here-you-little-shit.jpg',
-                 'https://pics.ballmemes.com/listen-here-you-little-shit-8006247.png']
-
-    if '!scrumpy' in ctx.content.lower():
-        await ctx.channel.send('Thinks your bags are awful')
-        print_to_console()
-    if '!calendar' in ctx.content.lower():
-        await ctx.channel.send('<@267888830634262529> needs to update the calendar!')
-        print_to_console()
-    if '!golfclap' in ctx.content.lower():
-        await ctx.channel.send('https://tenor.com/view/charlie-sheen-emilio-estevez-golf-clap-men-at-work-gif-7577611')
-        print_to_console()
-    if '!spooky' in ctx.content.lower():
-        await ctx.channel.send('https://img1.cgtrader.com/items/1911482/ca45cf3f32/'
-                               'air-horn-3d-model-max-obj-mtl-3ds-fbx-dxf.jpg')
-        print_to_console()
-    if '!whatever' in ctx.content.lower():
-        await ctx.channel.send('https://media.discordapp.net/attachments/765619338337058827/802299499908563024/'
-                               'whatever.gif')
-        print_to_console()
-    if '!cool' in ctx.content.lower() or 'cool cool cool' in ctx.content.lower():
-        await ctx.channel.send('https://tenor.com/view/andy-samberg-brooklyn99-jake-peralta-cool-gif-12063970')
-        print_to_console()
-    if '!myst' in ctx.content.lower():
-        await ctx.channel.send('https://tenor.com/view/is-it-though-thor-smile-gif-13334930')
-        print_to_console()
-    if '!beylock' in ctx.content.lower():
-        await ctx.channel.send('https://imgur.com/a/xux2u6p')
-        print_to_console()
-    if 'flex' in ctx.content.lower():
-        await ctx.channel.send(
-            'https://cdn.discordapp.com/attachments/676183284123828236/823278892676022353/image0.jpg')
-        print_to_console()
-    if '!happybirthday' in ctx.content.lower():
-        await ctx.channel.send('https://giphy.com/gifs/i8htPQwChFOVcpnImq')
-        print_to_console()
-    if '!magic' in ctx.content.lower():
-        await ctx.channel.send('https://media.discordapp.net/attachments/676183284123828236/761438362720272394/'
-                               'Kat_Confetti.gif')
-        print_to_console()
-    if '!lynkz' in ctx.content.lower():
-        await ctx.channel.send(
-            'https://tenor.com/view/james-franco-fuck-that-dude-fuckoff-annoyed-annoying-gif-11146686')
-        print_to_console()
-    if 'listen here you little shit' in ctx.content.lower():
-        await ctx.channel.send(random.choice(shit_list))
-        print_to_console()
-    if '!candercane' in ctx.content.lower():
-        await ctx.channel.send('https://giphy.com/gifs/angry-mad-anger-l1J9u3TZfpmeDLkD6')
-        print_to_console()
-    if '!wat' in ctx.content.lower():
-        await ctx.channel.send('https://imgur.com/a/PnB5eFk')
-        print_to_console()
-    if '!thisisfine' in ctx.content.lower() or 'this is fine' in ctx.content.lower():
-        await ctx.channel.send('https://imgur.com/a/uDAO5In')
-        print_to_console()
-    if '!pirate' in ctx.content.lower():
-        await ctx.channel.send('https://imgur.com/a/TDot4Ba')
-        print_to_console()
-    if '!justice' in ctx.content.lower():
-        await ctx.channel.send('https://gfycat.com/adorablespotlesshammerheadbird')
-        print_to_console()
-    if '!suckit' in ctx.content.lower() or 'suck it' in ctx.content.lower():
-        await ctx.channel.send('https://imgur.com/Fy6RhWI')
-        print_to_console()
+    for key in command_dict:
+        if key in ctx.content.lower():
+            await ctx.channel.send(command_dict[key])
+            print_to_console()
 
     # Without the following line, the bot gets stuck and won't process commands
     await bot.process_commands(ctx)
