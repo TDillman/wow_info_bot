@@ -55,6 +55,7 @@ async def on_ready():
 
 @bot.command()
 async def summary(ctx, arg):
+    begin_time = datetime.now()
     if ctx.author == bot.user:
         return
     try:
@@ -104,7 +105,21 @@ async def summary(ctx, arg):
             f'https://raider.io/api/v1/characters/profile?region=us&realm={server_slug}'
             f'&name={character_name}&fields=mythic_plus_scores_by_season%3Acurrent%2Craid_progression'
         )
-        raider_io_object = requests.get(raider_io_api_url).json()
+        raider_io_object_raw = requests.get(raider_io_api_url)
+
+        if raider_io_object_raw.ok:
+            raider_io_object = raider_io_object_raw.json()
+            raider_io_overall = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['all']
+            raider_io_dps = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['dps']
+            raider_io_heal = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['healer']
+            raider_io_tank = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['tank']
+            raider_io_nathria = raider_io_object['raid_progression']['castle-nathria']['summary']
+        else:
+            raider_io_overall = "Unavailable"
+            raider_io_dps = "Unavailable"
+            raider_io_heal = "Unavailable"
+            raider_io_tank = "Unavailable"
+            raider_io_nathria = "Unavailable"
 
         @dataclass
         class Character:
@@ -126,11 +141,11 @@ async def summary(ctx, arg):
             full_image_bg: str = character_image_object['assets'][2]['value']
             full_image_no_bg: str = character_image_object['assets'][3]['value']
             class_color: str = hex(discord_embed_color_dict[character_gear_object['character_class']['name']])
-            overall_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['all']
-            dps_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['dps']
-            healer_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['healer']
-            tank_io_rating: float = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['tank']
-            nathria_raid_prog: str = raider_io_object['raid_progression']['castle-nathria']['summary']
+            overall_io_rating: float = raider_io_overall
+            dps_io_rating: float = raider_io_dps
+            healer_io_rating: float = raider_io_heal
+            tank_io_rating: float = raider_io_tank
+            nathria_raid_prog: str = raider_io_nathria
             raider_io_url: str = f'https://raider.io/characters/us/{server_slug}/{character_name}'
             armory_url: str = f'https://worldofwarcraft.com/en-us/character/us/{server_slug}/{character_name}'
             warcraftlogs_url: str = f'https://www.warcraftlogs.com/character/us/{server_slug}/{character_name}'
@@ -199,8 +214,7 @@ async def summary(ctx, arg):
                                                        f'[Full body no background]({character.full_image_no_bg})',
                         inline=False)
         embed.set_thumbnail(url=character.inset_image)
-        embed.set_footer(text=f'{footer} {datetime.now()}')
-
+        embed.set_footer(text=f'{footer} {datetime.now()}\nExecuted in {datetime.now() - begin_time}')
         # Send embed, delete message
         await ctx.author.send(embed=embed)
         await ctx.message.delete()
