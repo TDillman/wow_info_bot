@@ -156,6 +156,9 @@ async def summary(ctx, arg):
             except:
                 pass
 
+        if not enchant_string:
+            enchant_string = "No enchantments detected"
+
         legendary_string = None
         for x in range(len(character_equipment_object['equipped_items'])):
             if character_gear_object['level'] < 60:
@@ -168,9 +171,9 @@ async def summary(ctx, arg):
                                     f"{character_equipment_object['equipped_items'][x]['level']['display_string']}")
 
         raider_io_mplus_string = f'Overall rating: {character.overall_io_rating}\n' \
-                                 f'DPS rating: {character.dps_io_rating}\n' \
-                                 f'Healer rating: {character.healer_io_rating}\n' \
-                                 f'Tank rating: {character.tank_io_rating}'
+                             f'DPS rating: {character.dps_io_rating}\n' \
+                             f'Healer rating: {character.healer_io_rating}\n' \
+                             f'Tank rating: {character.tank_io_rating}'
 
         raider_io_raid_string = f'Nathria: {character.nathria_raid_prog}'
 
