@@ -14,8 +14,7 @@ guild_name = 'might'
 
 guild_roster = api_client.wow.profile.get_guild_roster("us", "en_US", server_slug, guild_name)
 
-char_list = [guild_roster['members'][x]['character']['name'] for x in
-             range(len(guild_roster['members'])) if guild_roster['members'][x]['character']['level'] == 60]
+char_list = [guild_roster['members'][x]['character']['name'] for x in range(len(guild_roster['members']))]
 
 char_list.sort()
 
