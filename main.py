@@ -512,6 +512,18 @@ async def status(ctx):
     time.sleep(.25)
     await ctx.message.delete()
 
+@bot.command(pass_context=True)
+async def ping(ctx):
+    begin_time = datetime.now()
+
+    print(f'{datetime.now()}: {ctx.message.guild.name} -- {ctx.author.display_name} ({ctx.author}) ran '
+          f'{ctx.message.content} in the #{ctx.channel.name} channel')
+
+    await ctx.channel.send(f'Bot responded in {datetime.now() - begin_time}.')
+
+    if ctx.author == bot.user:
+        return
+
 
 @bot.command()
 async def talk(ctx, *, arg):
