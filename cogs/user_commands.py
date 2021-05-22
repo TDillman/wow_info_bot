@@ -79,13 +79,6 @@ class User(commands.Cog, name="user"):
         await ctx.message.delete()
         await ctx.send("https://imgur.com/a/xux2u6p")
 
-    @commands.command(name="flex")
-    async def flex(self, ctx):
-        """
-        Seriously though, that's impressive.
-        """
-        await ctx.message.delete()
-        await ctx.send("https://cdn.discordapp.com/attachments/676183284123828236/823278892676022353/image0.jpg")
 
     @commands.command(name="happybirthday")
     async def happybirthay(self, ctx):
