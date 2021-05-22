@@ -79,7 +79,6 @@ class User(commands.Cog, name="user"):
         await ctx.message.delete()
         await ctx.send("https://imgur.com/a/xux2u6p")
 
-
     @commands.command(name="happybirthday")
     async def happybirthay(self, ctx):
         """
