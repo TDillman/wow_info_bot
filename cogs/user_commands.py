@@ -11,7 +11,7 @@ else:
         config = yaml.load(file, Loader=yaml.FullLoader)
 
 
-class User(commands.Cog, name="User Commands"):
+class User(commands.Cog, name="user"):
     def __init__(self, bot):
         self.bot = bot
 
