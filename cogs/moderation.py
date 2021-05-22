@@ -57,29 +57,6 @@ class Moderation(commands.Cog, name="moderation"):
                 )
                 await context.message.channel.send(embed=embed)
 
-    @commands.command(name="nick")
-    @commands.has_permissions(manage_nicknames=True)
-    async def nick(self, context, member: discord.Member, *, name: str):
-        """
-        Change the nickname of a user on a server.
-        """
-        try:
-            if name.lower() == "!reset":
-                name = None
-            await member.change_nickname(name)
-            embed = discord.Embed(
-                title="Changed Nickname!",
-                description=f"**{member}'s** new nickname is **{name}**!",
-                color=config["success"]
-            )
-            await context.send(embed=embed)
-        except:
-            embed = discord.Embed(
-                title="Error!",
-                description="An error occurred while trying to change the nickname of the user.",
-                color=config["success"]
-            )
-            await context.message.channel.send(embed=embed)
 
     @commands.command(name="ban")
     @commands.has_permissions(ban_members=True)
@@ -122,6 +99,7 @@ class Moderation(commands.Cog, name="moderation"):
     async def warn(self, context, member: discord.Member, *args):
         """
         Warns a user in his private messages.
+            Usage: !warn @User Reason
         """
         reason = " ".join(args)
         embed = discord.Embed(
@@ -144,6 +122,8 @@ class Moderation(commands.Cog, name="moderation"):
     async def purge(self, context, number):
         """
         Delete a number of messages.
+            Usage: !purge <number of posts to delete>
+            Example: !purge 5
         """
         try:
             number = int(number)
