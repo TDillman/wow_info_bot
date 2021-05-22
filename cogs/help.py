@@ -31,7 +31,7 @@ class Help(commands.Cog, name="help"):
             value=":ping_pong:",
             inline=True
         )
-        embed.add_field(name="Respose Time",
+        embed.add_field(name="Response Time",
                         value=f'Bot responded in {datetime.datetime.now() - begin_time}.')
         embed.set_footer(
             text=f"Pong request by {ctx.message.author}"

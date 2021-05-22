@@ -43,7 +43,7 @@ async def on_ready():
     print(f"Discord.py API version: {discord.__version__}")
     print(f"Python version: {platform.python_version()}")
     print(f"Running on: {platform.system()} {platform.release()} ({os.name})")
-    print("-------------------\n\n")
+    print("-------------------\n")
 
 
 # Setup the game status task of the bot
@@ -71,7 +71,6 @@ async def on_message(message):
     if message.author == bot.user or message.author.bot:
         return
     # Ignores if a command is being executed by a blacklisted user
-
     if message.author.id in config["blacklist"]:
         return
     await bot.process_commands(message)
