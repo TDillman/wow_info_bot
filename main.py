@@ -28,20 +28,10 @@ bot = Bot(command_prefix=config["bot_prefix"])
 
 bot.remove_command("help")
 
-shit_list = ['https://i.pinimg.com/originals/ef/a6/48/efa648c67f3cb05287ded99612af130f.png',
-             'https://i.kym-cdn.com/entries/icons/original/000/017/372/ClmrSzk.jpg.png',
-             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAuOPyTLmaoq6hrHNNUnNzzk9_OeRtpLX80g&usqp=CAU',
-             'https://i.kym-cdn.com/photos/images/facebook/000/917/464/752.jpg',
-             'https://memegenerator.net/img/instances/40808454/listen-here-you-little-shit.jpg',
-             'https://ih1.redbubble.net/image.1045539425.2307/poster,840x830,f8f8f8-pad,1000x1000,f8f8f8.jpg',
-             'https://memegenerator.net/img/instances/71923924/listen-here-you-little-shit.jpg',
-             'https://pics.ballmemes.com/listen-here-you-little-shit-8006247.png'
-             ]
-
 command_dict = {
         'cool cool cool': 'https://tenor.com/view/andy-samberg-brooklyn99-jake-peralta-cool-gif-12063970',
         'flex': 'https://cdn.discordapp.com/attachments/676183284123828236/823278892676022353/image0.jpg',
-        'listen here you little shit': random.choice(shit_list),
+        'listen here you little shit': 'https://i.pinimg.com/originals/ef/a6/48/efa648c67f3cb05287ded99612af130f.png',
         'suck it': 'https://imgur.com/Fy6RhWI'
     }
 

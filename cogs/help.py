@@ -3,7 +3,6 @@ import sys
 import datetime
 import discord
 import yaml
-import random
 
 from discord.ext import commands
 
