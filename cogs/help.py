@@ -92,20 +92,6 @@ class Help(commands.Cog, name="help"):
             embed.add_field(name=i.capitalize(), value=f'```{help_text}```', inline=False)
         await context.send(embed=embed)
 
-    @commands.command(name="custom")
-    async def custom(self, ctx):
-        """
-        Returns a list of the custom commands for Might (mostly memes, really)
-        """
-        custom_command_list = list(command_dict.keys())
-        custom_command_list.sort()
-        custom_command_string = "\n".join(custom_command_list)
-
-        await ctx.author.send(custom_command_string)
-
-        time.sleep(.25)
-        await ctx.message.delete()
-
 
 def setup(bot):
     bot.add_cog(Help(bot))
