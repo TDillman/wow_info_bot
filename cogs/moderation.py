@@ -173,4 +173,4 @@ class Moderation(commands.Cog, name="moderation"):
 
 
 def setup(bot):
-    bot.add_cog(moderation(bot))
+    bot.add_cog(Moderation(bot))
