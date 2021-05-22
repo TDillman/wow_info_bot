@@ -31,6 +31,7 @@ class Help(commands.Cog, name="help"):
             value=":ping_pong:",
             inline=True
         )
+        embed.set_image(url='https://www.filmandtvnow.com/wp-content/uploads/2014/12/Baymax.jpg')
         embed.add_field(name="Response Time",
                         value=f'Bot responded in {datetime.datetime.now() - begin_time}.')
         embed.set_footer(

@@ -38,8 +38,7 @@ class General(commands.Cog, name="general"):
     async def poll(self, ctx, *args):
         """
         Create a poll where members can vote.
-
-        Usage: !poll Is Santa real?
+            Usage: !poll Is Santa real?
         """
         poll_title = " ".join(args)
         embed = discord.Embed(
