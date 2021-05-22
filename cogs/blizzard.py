@@ -43,7 +43,11 @@ class Blizzard(commands.Cog, name="blizzard"):
     @commands.command(name="summary")
     async def summary(self, ctx, arg):
         """
-        Gives a character summary for officers to quicky determine if a character is raid-ready
+        Gives a character summary for officers to quicky determine if a character is raid-ready.
+
+        Usage: !summary Character-Server
+
+        If the character is on Arygos, just do !summary Character
         """
         begin_time = datetime.now()
         try:

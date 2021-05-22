@@ -21,7 +21,7 @@ class General(commands.Cog, name="general"):
     @commands.command(name="say", aliases=["echo"])
     async def say(self, ctx, *, args):
         """
-        The bot will say anything you want.
+        The bot will say anything you want. Only officers can use this one.
         """
         await ctx.message.delete()
         if ctx.message.author.id in config["owners"]:
@@ -38,6 +38,8 @@ class General(commands.Cog, name="general"):
     async def poll(self, ctx, *args):
         """
         Create a poll where members can vote.
+
+        Usage: !poll Is Santa real?
         """
         poll_title = " ".join(args)
         embed = discord.Embed(
