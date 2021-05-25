@@ -5,6 +5,8 @@ import random
 import platform
 import yaml
 import sys
+import requests
+import json
 
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
@@ -44,6 +46,7 @@ async def on_ready():
     print(f"Python version: {platform.python_version()}")
     print(f"Running on: {platform.system()} {platform.release()} ({os.name})")
     print("-------------------\n")
+    affirmation.start()
 
 
 # Setup the game status task of the bot
@@ -115,6 +118,22 @@ async def on_command_error(context, error):
         )
         await context.send(embed=embed)
     raise error
+
+
+@tasks.loop(hours=24)
+async def affirmation():
+    url = 'https://www.affirmations.dev'
+
+    request = requests.get(url)
+    affirmation_object = json.loads(request.text)
+
+    # Create embed in Discord
+    embed = discord.Embed(title="Daily Affirmation", color=config["success"])
+    embed.set_thumbnail(url='https://www.pitara.com/media/lotus-flower_hu4aeaffed200a0cfd996c55c6e5156325_90396_600x0_resize_q60_box.jpg')
+    embed.add_field(name='Affirmation', value=affirmation_object['affirmation'])
+
+    # Declare #might-health as destination channel
+    await bot.get_channel(710566582845177888).send(embed=embed)
 
 
 # Run the bot with the token
