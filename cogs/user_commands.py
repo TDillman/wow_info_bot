@@ -20,7 +20,6 @@ class User(commands.Cog, name="user"):
         """
         Scrumpy's opinion
         """
-        await ctx.message.delete()
         await ctx.send("Thinks your bags are awful")
 
     @commands.command(name="calendar")
@@ -28,7 +27,6 @@ class User(commands.Cog, name="user"):
         """
         Remind Kat to update the in-game calendar
         """
-        await ctx.message.delete()
         await ctx.send("<@267888830634262529> needs to update the calendar!")
 
     @commands.command(name="golfclap")
@@ -36,7 +34,6 @@ class User(commands.Cog, name="user"):
         """
         Sends a golfclap
         """
-        await ctx.message.delete()
         await ctx.send("https://tenor.com/view/charlie-sheen-emilio-estevez-golf-clap-men-at-work-gif-7577611")
 
     @commands.command(name="spooky")
@@ -44,7 +41,6 @@ class User(commands.Cog, name="user"):
         """
         bwAAAAAAAHHHP!
         """
-        await ctx.message.delete()
         await ctx.send("https://img1.cgtrader.com/items/1911482/ca45cf3f32/air-horn-3d-model-max-obj-mtl-3ds-fbx-dxf.jpg")
 
     @commands.command(name="whatever")
@@ -52,7 +48,6 @@ class User(commands.Cog, name="user"):
         """
         That's just, like, your opinion man
         """
-        await ctx.message.delete()
         await ctx.send("https://media.discordapp.net/attachments/765619338337058827/802299499908563024/whatever.gif")
 
     @commands.command(name="cool")
@@ -60,7 +55,6 @@ class User(commands.Cog, name="user"):
         """
         Detective Jake Peralta
         """
-        await ctx.message.delete()
         await ctx.send("https://tenor.com/view/andy-samberg-brooklyn99-jake-peralta-cool-gif-12063970")
 
     @commands.command(name="myst")
@@ -68,7 +62,6 @@ class User(commands.Cog, name="user"):
         """
         The condescension is palpable.
         """
-        await ctx.message.delete()
         await ctx.send("https://tenor.com/view/is-it-though-thor-smile-gif-13334930")
 
     @commands.command(name="beylock")
@@ -76,7 +69,6 @@ class User(commands.Cog, name="user"):
         """
         Loves Weird Al
         """
-        await ctx.message.delete()
         await ctx.send("https://imgur.com/a/xux2u6p")
 
     @commands.command(name="happybirthday")
@@ -84,7 +76,6 @@ class User(commands.Cog, name="user"):
         """
         PARTY TIME
         """
-        await ctx.message.delete()
         await ctx.send("https://giphy.com/gifs/i8htPQwChFOVcpnImq")
 
     @commands.command(name="magic")
@@ -92,7 +83,6 @@ class User(commands.Cog, name="user"):
         """
         Magic. Simple.
         """
-        await ctx.message.delete()
         await ctx.send("https://media.discordapp.net/attachments/676183284123828236/761438362720272394/Kat_Confetti.gif")
 
     @commands.command(name="lynkz")
@@ -100,7 +90,6 @@ class User(commands.Cog, name="user"):
         """
         Just one man's opinion
         """
-        await ctx.message.delete()
         await ctx.send("https://tenor.com/view/james-franco-fuck-that-dude-fuckoff-annoyed-annoying-gif-11146686")
 
     @commands.command(name="candercane")
@@ -108,7 +97,6 @@ class User(commands.Cog, name="user"):
         """
         My favorite gif on the planet. Use when you're angry.
         """
-        await ctx.message.delete()
         await ctx.send("https://giphy.com/gifs/angry-mad-anger-l1J9u3TZfpmeDLkD6")
 
     @commands.command(name="wat")
@@ -116,7 +104,6 @@ class User(commands.Cog, name="user"):
         """
         Kat doesn't know what that was.
         """
-        await ctx.message.delete()
         await ctx.send("https://imgur.com/a/PnB5eFk")
 
     @commands.command(name="thisisfine")
@@ -124,7 +111,6 @@ class User(commands.Cog, name="user"):
         """
         Someone help Kat.
         """
-        await ctx.message.delete()
         await ctx.send("https://imgur.com/a/uDAO5In")
 
     @commands.command(name="pirate")
@@ -132,7 +118,6 @@ class User(commands.Cog, name="user"):
         """
         Pirate shimmy. Self-explanatory.
         """
-        await ctx.message.delete()
         await ctx.send("https://imgur.com/a/TDot4Ba")
 
     @commands.command(name="justice")
@@ -140,7 +125,6 @@ class User(commands.Cog, name="user"):
         """
         An eye for an eye.
         """
-        await ctx.message.delete()
         await ctx.send("https://gfycat.com/adorablespotlesshammerheadbird")
 
     @commands.command(name="suckit")
@@ -148,8 +132,14 @@ class User(commands.Cog, name="user"):
         """
         Dance, monkey
         """
-        await ctx.message.delete()
         await ctx.send("https://imgur.com/Fy6RhWI")
+
+    @commands.command(name="risn")
+    async def risn(self, ctx):
+        """
+        Look man...
+        """
+        await ctx.send("https://www.circlek.com/themes/custom/circlek/images/logos/logo-full-color-rgb.jpg")
 
 
 def setup(bot):
