@@ -141,6 +141,13 @@ class User(commands.Cog, name="user"):
         """
         await ctx.send("https://www.circlek.com/themes/custom/circlek/images/logos/logo-full-color-rgb.jpg")
 
+    @commands.command(name="hakkd")
+    async def hakkd(self, ctx):
+        """
+        Not a "burnin' down the house" joke?
+        """
+        await ctx.send("https://tenor.com/view/mad-monster-dont-let-it-happen-again-gif-14024298")
+
 
 def setup(bot):
     bot.add_cog(User(bot))
