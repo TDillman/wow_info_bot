@@ -4,6 +4,7 @@ import sys
 import discord
 import yaml
 from discord.ext import commands
+from discord.utils import get
 
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
@@ -21,13 +22,14 @@ class GuildQuest(commands.Cog, name="guildquest"):
         """
         Posts the weekly guild quest.
         """
+
         if context.message.author.id in config["owners"]:
             embed1 = discord.Embed(
                 description="Weekly Guild Quest!",
                 color=config["success"]
             )
             embed1.add_field(name="Guild Quest: May 25, 2021",
-                             value="<@844220216895471736> -- Find these three images and post your own for a raffle ticket!\n"
+                             value="Find these three images and post your own for a raffle ticket!\n"
                                    "We're continuing the trend of Vanilla dungeons. You'll find this one in Desolace, "
                                    "in Kalimdor.\n\nPS -- Hope your vault isn't crap.")
             embed2 = discord.Embed(
