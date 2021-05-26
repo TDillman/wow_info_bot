@@ -222,7 +222,7 @@ class Blizzard(commands.Cog, name="blizzard"):
 
             name_string = f"{character.name}, level {character.level} {character.race} {character.spec} {character.player_class}"
 
-            guild_string = f"[{character.guild}](https://worldofwarcraft.com/en-us/guild/us/{server_slug}/{character.guild})" \
+            guild_string = f"[{character.guild}](https://worldofwarcraft.com/en-us/guild/us/{server_slug}/{character.guild.replace(' ','-')})" \
                            f"\n{character.faction} on {character.realm}"
 
             ilvl_string = f"Average ilvl: {character.ilvl_avg}\nEquipped ilvl: {character.ilvl_equip}"
