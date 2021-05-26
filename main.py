@@ -90,6 +90,8 @@ async def reload(context):
             color=config["error"]
         )
         await context.send(embed=embed)
+
+
 # The code in this event is executed every time someone sends a message, with or without the prefix
 @bot.event
 async def on_message(message):
