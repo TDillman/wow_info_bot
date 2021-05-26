@@ -148,6 +148,13 @@ class User(commands.Cog, name="user"):
         """
         await ctx.send("https://tenor.com/view/mad-monster-dont-let-it-happen-again-gif-14024298")
 
+    @commands.command(name="wtf")
+    async def wtf(self, ctx):
+        """
+        Best WTF gif there is
+        """
+        await ctx.send("https://giphy.com/gifs/what-the-fuck-wtf-ukGm72ZLZvYfS")
+
 
 def setup(bot):
     bot.add_cog(User(bot))
