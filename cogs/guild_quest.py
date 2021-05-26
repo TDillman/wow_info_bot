@@ -22,6 +22,7 @@ class GuildQuest(commands.Cog, name="guildquest"):
         """
         Posts the weekly guild quest.
         """
+        guild_member_role = discord.utils.get(context.guild.roles, name="Guild Member")
 
         if context.message.author.id in config["owners"]:
             embed1 = discord.Embed(
@@ -29,7 +30,7 @@ class GuildQuest(commands.Cog, name="guildquest"):
                 color=config["success"]
             )
             embed1.add_field(name="Guild Quest: May 25, 2021",
-                             value="Find these three images and post your own for a raffle ticket!\n"
+                             value=f"{guild_member_role.mention} -- these three images and post your own for a raffle ticket!\n"
                                    "We're continuing the trend of Vanilla dungeons. You'll find this one in Desolace, "
                                    "in Kalimdor.\n\nPS -- Hope your vault isn't crap.")
             embed2 = discord.Embed(
