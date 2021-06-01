@@ -91,15 +91,20 @@ class Raffle(commands.Cog, name="raffle"):
         if ctx.message.author.id in config["owners"]:
             sheet = gc.open("Might Raffle Tickets 2021").get_worksheet(current_month)
             length_of_sheet = len(sheet.col_values(1))
+            awarded_by = ctx.message.author.display_name
+            message_link = ctx.message.jump_url
             sheet.update(f'A{length_of_sheet + 1}', args)
+            sheet.update(f'B{length_of_sheet + 1}', awarded_by)
+            sheet.update(f'C{length_of_sheet + 1}', message_link)
             embed = discord.Embed(
                 title=f"Raffle Ticket Awarded!",
-                description=f"Reason: {args}",
+                description=f"Reason: {args}\nAwarded by: {awarded_by}",
                 color=config["success"]
             )
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcoloredfinishedsmall.png"
             )
+            await ctx.message.delete()
             await ctx.channel.send(embed=embed)
         else:
             embed = discord.Embed(
@@ -118,6 +123,9 @@ class Raffle(commands.Cog, name="raffle"):
             example: !showtickets May
         """
         sheet = gc.open("Might Raffle Tickets 2021").get_worksheet(month_dict[arg])
+        # Discord embed fields have a 1024 character limit so I split the raffle sheet up into 2 lists
+        # Each list gets sorted and added to its own embed to get around this limit. Unless we award a shitload of
+        # tickets, it won't be a problem. I can split it into three if I need to later.
         ticket_string_first = ''
         ticket_string_second = ''
         half_list = int(len(sheet.col_values(1)) / 2)
@@ -145,12 +153,12 @@ class Raffle(commands.Cog, name="raffle"):
                 url="https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcoloredfinishedsmall.png"
             )
             embed.add_field(
-                name="\u200b",
+                name="\u200b",  # Blank character because name is a required parameter
                 value=ticket_string_second,
                 inline=True
             )
             embed.add_field(
-                name="\u200b",
+                name="\u200b",  # Blank character because name is a required parameter
                 value=ticket_string_first,
                 inline=True
             )
