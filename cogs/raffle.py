@@ -73,7 +73,7 @@ class Raffle(commands.Cog, name="raffle"):
             example: !addticket HealtoDeath - Raid Attendance
         """
         current_month = datetime.now().month - 1
-        if ctx.message.author.id in config["owner"]:
+        if ctx.message.author.id in config["owners"]:
             sheet = gc.open("Might Raffle Tickets 2021").get_worksheet(current_month)
             length_of_sheet = len(sheet.col_values(1))
             sheet.update(f'A{length_of_sheet + 1}', args)
@@ -82,6 +82,8 @@ class Raffle(commands.Cog, name="raffle"):
                 description=f"Reason: {args}",
                 color=config["success"]
             )
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcoloredfinishedsmall.png")
             await ctx.channel.send(embed=embed)
         else:
             embed = discord.Embed(
@@ -100,18 +102,31 @@ class Raffle(commands.Cog, name="raffle"):
             example: !showtickets May
         """
         sheet = gc.open("Might Raffle Tickets 2021").get_worksheet(month_dict[arg])
-        ticket_string = ''
-        ticket_list = sheet.col_values(1)
-        for ticket in ticket_list:
-            ticket_string += f'{ticket}\n'
+        ticket_string_first = ''
+        ticket_string_second = ''
+        half_list = int(len(sheet.col_values(1)) / 2)
+        ticket_list_first = sheet.col_values(1)[half_list:]
+        ticket_list_second = sheet.col_values(1)[:half_list]
+        for ticket in ticket_list_first:
+            ticket_string_first += f'{ticket}\n'
+        for ticket in ticket_list_second:
+            ticket_string_second += f'{ticket}\n'
         embed = discord.Embed(
             title=f"Raffle Tickets for {arg}!",
             description=f"{arg} 2021",
             color=config["success"]
         )
+        embed.set_thumbnail(
+            url="https://cdn.discordapp.com/attachments/676183284123828236/679823287521771602/mightcoloredfinishedsmall.png")
         embed.add_field(
-            name="Current ticket:",
-            value=ticket_string
+            name="1/2",
+            value=ticket_string_first,
+            inline=False
+        )
+        embed.add_field(
+            name="2/2",
+            value=ticket_string_second,
+            inline=False
         )
         await ctx.channel.send(embed=embed)
 
