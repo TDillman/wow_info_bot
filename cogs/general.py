@@ -4,6 +4,7 @@ import aiohttp
 import json
 import discord
 import yaml
+import random
 
 from discord.ext import commands
 
@@ -71,6 +72,27 @@ class General(commands.Cog, name="general"):
                 color=config["success"]
             )
             await ctx.channel.send(embed=embed)
+
+    @commands.command(name="roll")
+    async def roll(self, ctx, arg):
+        """
+        Rolls a random number between 1 and the user's selection
+            usage: !roll 50
+            will roll a number between 1 and 50
+        """
+        roll = random.randint(1, int(arg))
+        embed = discord.Embed(
+            description=f"{ctx.message.author.display_name} rolled a **{roll}** (1 through {arg})."
+        )
+        if roll == 1:
+            victory_string = f"{ctx.message.author.display_name} loses!"
+            embed.add_field(
+                name="Defeat!",
+                value=victory_string
+            )
+
+        await ctx.message.delete()
+        await ctx.channel.send(embed=embed)
 
 
 def setup(bot):

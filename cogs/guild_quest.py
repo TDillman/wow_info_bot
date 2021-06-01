@@ -4,7 +4,6 @@ import sys
 import discord
 import yaml
 from discord.ext import commands
-from discord.utils import get
 
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")

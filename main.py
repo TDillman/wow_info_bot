@@ -68,20 +68,26 @@ if __name__ == "__main__":
 
 
 @bot.command(name="reload")
-async def reload(context):
+async def reload(ctx):
     """
     Reload extensions so I don't have to reboot the bot when I make changes
     """
-    if context.message.author.id in config["owners"]:
+    if ctx.message.author.id in config["owners"]:
         for file in os.listdir("./cogs"):
             if file.endswith(".py"):
                 extension = file[:-3]
                 try:
                     bot.reload_extension(f"cogs.{extension}")
                     print(f"Reoaded extension '{extension}'")
+                    embed = discord.Embed (
+                        title="Functions have been reloaded"
+                    )
                 except Exception as e:
                     exception = f"{type(e).__name__}: {e}"
                     print(f"Failed to reload extension {extension}\n{exception}")
+                    embed = discord.Embed(
+                        title="Functions have failed to be reloaded"
+                    )
 
     else:
         embed = discord.Embed(
@@ -89,7 +95,7 @@ async def reload(context):
             description="You don't have the permission to use this command.",
             color=config["error"]
         )
-        await context.send(embed=embed)
+    await ctx.channel.send(embed=embed)
 
 
 # The code in this event is executed every time someone sends a message, with or without the prefix
