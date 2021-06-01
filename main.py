@@ -1,7 +1,6 @@
 import discord
 import nest_asyncio
 import os
-import random
 import platform
 import yaml
 import sys
@@ -11,6 +10,10 @@ import json
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 from blizzardapi import BlizzardApi
+
+"""
+Bot created with help from https://github.com/kkrypt0nn/Python-Discord-Bot-Template
+"""
 
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")
@@ -52,8 +55,7 @@ async def on_ready():
 # Setup the game status task of the bot
 @tasks.loop(minutes=1.0)
 async def status_task():
-    statuses = ["with you!", "with dynamite!", f"{config['bot_prefix']}help", "with fire!"]
-    await bot.change_presence(activity=discord.Game(random.choice(statuses)))
+    await bot.change_presence(activity=discord.Game("Type !help for commands"))
 
 if __name__ == "__main__":
     for file in os.listdir("./cogs"):
