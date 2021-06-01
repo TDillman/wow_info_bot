@@ -6,7 +6,7 @@ import random
 import gspread
 
 from discord.ext import commands
-from datetime import datetime
+from datetime import datetime, date
 
 gc = gspread.service_account()
 
@@ -95,7 +95,8 @@ class Raffle(commands.Cog, name="raffle"):
             message_link = ctx.message.jump_url
             sheet.update(f'A{length_of_sheet + 1}', args)
             sheet.update(f'B{length_of_sheet + 1}', awarded_by)
-            sheet.update(f'C{length_of_sheet + 1}', message_link)
+            sheet.update(f'C{length_of_sheet + 1}', date.today().strftime("%m/%d/%Y"))
+            sheet.update(f'D{length_of_sheet + 1}', message_link)
             embed = discord.Embed(
                 title=f"Raffle Ticket Awarded!",
                 description=f"Reason: {args}\nAwarded by: {awarded_by}",
@@ -128,8 +129,9 @@ class Raffle(commands.Cog, name="raffle"):
         # tickets, it won't be a problem. I can split it into three if I need to later.
         ticket_string_first = ''
         ticket_string_second = ''
-        half_list = int(len(sheet.col_values(1)) / 2)
-        total_ticket_list = sheet.col_values(1)
+        half_list = int(len(sheet.get('A2:A')) / 2)
+        total_ticket_list = sheet.get('A2:A')
+        total_tickets = len(total_ticket_list)
         total_ticket_list.sort()
         ticket_list_first = total_ticket_list[half_list:]
         ticket_list_second = total_ticket_list[:half_list]
@@ -141,12 +143,12 @@ class Raffle(commands.Cog, name="raffle"):
             await ctx.channel.send(embed=embed)
         else:
             for ticket in ticket_list_first:
-                ticket_string_first += f'{ticket}\n'
+                ticket_string_first += f'{ticket[0]}\n'
             for ticket in ticket_list_second:
-                ticket_string_second += f'{ticket}\n'
+                ticket_string_second += f'{ticket[0]}\n'
             embed = discord.Embed(
                 title=f"Raffle Tickets for {arg}!",
-                description=f"{arg} 2021",
+                description=f"{arg} 2021 -- {total_tickets} total tickets",
                 color=config["success"]
             )
             embed.set_thumbnail(
