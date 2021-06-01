@@ -1,0 +1,4 @@
+PyYAML~=5.4.1
+gspread~=3.7.0
+requests~=2.25.1
+discord.py~=1.5.1
