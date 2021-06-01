@@ -28,25 +28,25 @@ class GuildQuest(commands.Cog, name="guildquest"):
                 description="Weekly Guild Quest!",
                 color=config["success"]
             )
-            embed1.add_field(name="Guild Quest: May 25, 2021",
+            embed1.add_field(name="Guild Quest: June 1st, 2021",
                              value=f"{guild_member_role.mention} -- Find these three images and post your own for a raffle ticket!\n"
-                                   "We're continuing the trend of Vanilla dungeons. You'll find this one in Desolace, "
-                                   "in Kalimdor.\n\nPS -- Hope your vault isn't crap.")
+                                   "We're continuing the trend of Vanilla dungeons. You'll find this one in Eastern Kingdoms."
+                                   "It's the smallest dungeon I've ever seen in my life, and it's super easy to find")
             embed2 = discord.Embed(
                 description="First Picture",
                 color=config["success"]
             )
-            embed2.set_image(url="https://i.imgur.com/q61uGE6.jpeg")
+            embed2.set_image(url="https://i.imgur.com/enkzyHl.jpg")
             embed3 = discord.Embed(
                 description="Second Picture",
                 color=config["success"]
             )
-            embed3.set_image(url="https://i.imgur.com/XRljH2x.jpg")
+            embed3.set_image(url="https://i.imgur.com/OK7ezEO.jpg")
             embed4 = discord.Embed(
                 description="Third Picture",
                 color=config["success"]
             )
-            embed4.set_image(url="https://i.imgur.com/A4ggbfW.jpg")
+            embed4.set_image(url="https://i.imgur.com/LSQoC14.jpg")
             await context.send(embed=embed1)
             await context.send(embed=embed2)
             await context.send(embed=embed3)
