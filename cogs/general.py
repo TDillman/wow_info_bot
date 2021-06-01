@@ -74,23 +74,6 @@ class General(commands.Cog, name="general"):
         await embed_message.add_reaction("👎")
         await embed_message.add_reaction("🤷")
 
-    @commands.command(name="bitcoin")
-    async def bitcoin(self, ctx):
-        """
-        Get the current price of bitcoin.
-        """
-        url = "https://api.coindesk.com/v1/bpi/currentprice/BTC.json"
-        # Async HTTP request
-        async with aiohttp.ClientSession() as session:
-            raw_response = await session.get(url)
-            response = await raw_response.text()
-            response = json.loads(response)
-            embed = discord.Embed(
-                title=":information_source: Info",
-                description=f"Bitcoin price is: ${response['bpi']['USD']['rate']}",
-                color=config["success"]
-            )
-            await ctx.channel.send(embed=embed)
 
     @commands.command(name="roll")
     async def roll(self, ctx, arg):
