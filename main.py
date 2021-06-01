@@ -1,3 +1,8 @@
+"""
+File modified under Apache License 2.0
+https://github.com/kkrypt0nn/Python-Discord-Bot-Template
+"""
+
 import discord
 import nest_asyncio
 import os
@@ -11,9 +16,6 @@ from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 from blizzardapi import BlizzardApi
 
-"""
-Bot created with help from https://github.com/kkrypt0nn/Python-Discord-Bot-Template
-"""
 
 if not os.path.isfile("config.yaml"):
     sys.exit("'config.yaml' not found! Please add it and try again.")

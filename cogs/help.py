@@ -1,3 +1,8 @@
+"""
+File modified under Apache License 2.0
+https://github.com/kkrypt0nn/Python-Discord-Bot-Template
+"""
+
 import os
 import sys
 import datetime
