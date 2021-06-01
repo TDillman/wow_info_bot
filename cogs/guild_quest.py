@@ -28,10 +28,12 @@ class GuildQuest(commands.Cog, name="guildquest"):
                 description="Weekly Guild Quest!",
                 color=config["success"]
             )
-            embed1.add_field(name="Guild Quest: June 1st, 2021",
-                             value=f"{guild_member_role.mention} -- Find these three images and post your own for a raffle ticket!\n"
-                                   "We're continuing the trend of Vanilla dungeons. You'll find this one in Eastern Kingdoms."
-                                   "It's the smallest dungeon I've ever seen in my life, and it's super easy to find")
+            embed1.add_field(
+                name="Guild Quest: June 1st, 2021",
+                value=f"{guild_member_role.mention} -- Find these three images and post your own for a raffle ticket!\n "
+                      f"We're continuing the trend of Vanilla dungeons. You'll find this one in Eastern Kingdoms. "
+                      f"It's the smallest dungeon I've ever seen in my life, and it's super easy to find"
+            )
             embed2 = discord.Embed(
                 description="First Picture",
                 color=config["success"]
@@ -51,6 +53,7 @@ class GuildQuest(commands.Cog, name="guildquest"):
             await context.send(embed=embed2)
             await context.send(embed=embed3)
             await context.send(embed=embed4)
+            await context.message.delete()
 
 
 def setup(bot):
