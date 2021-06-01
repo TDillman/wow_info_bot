@@ -78,7 +78,7 @@ async def reload(ctx):
                 extension = file[:-3]
                 try:
                     bot.reload_extension(f"cogs.{extension}")
-                    print(f"Reoaded extension '{extension}'")
+                    print(f"Reloaded extension '{extension}'")
                     embed = discord.Embed (
                         title="Functions have been reloaded"
                     )
@@ -88,7 +88,6 @@ async def reload(ctx):
                     embed = discord.Embed(
                         title="Functions have failed to be reloaded"
                     )
-
     else:
         embed = discord.Embed(
             title="Error!",
