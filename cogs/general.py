@@ -35,6 +35,25 @@ class General(commands.Cog, name="general"):
             )
             await ctx.author.send(embed=embed)
 
+    @commands.command(name="embed")
+    async def embed(self, context, *, args):
+        """
+        The bot will say anything you want, but within embeds.
+        """
+        if context.message.author.id in config["owners"]:
+            embed = discord.Embed(
+                description=args,
+                color=config["success"]
+            )
+            await context.send(embed=embed)
+        else:
+            embed = discord.Embed(
+                title="Error!",
+                description="You don't have the permission to use this command.",
+                color=config["error"]
+            )
+            await context.send(embed=embed)
+
     @commands.command(name="poll")
     async def poll(self, ctx, *args):
         """
