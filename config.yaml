@@ -2,6 +2,7 @@ bot_prefix: "!"
 discord_token: ${{ secrets.DISCORD_TOKEN }}
 blizzard_client_id: ${{ secrets.BLIZZARD_CLIENT_ID }}
 blizzard_secret_id: ${{ secrets.BLIZZARD_SECRET_ID }}
+youtube_api_key: ${{ secrets.YOUTUBE_API_KEY }}
 owners:
   - 165980889828818945 # Beylock
   - 267888830634262529 # HealtoDeath
