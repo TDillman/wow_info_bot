@@ -25,8 +25,11 @@ class Jams(commands.Cog, name="jams"):
             Usage: !jams Gaslight Anthem
         """
         results = youtube_wrapper.search_videos(search_keyword=args, order='relevance')
-        youtube_video_url = f"https://www.youtube.com/watch?v={results[0]['video_id']}"
-        await ctx.channel.send(youtube_video_url)
+        if len(results) == 0:
+            await ctx.channel.send(f"No results for {args}")
+        else:
+            youtube_video_url = f"https://www.youtube.com/watch?v={results[0]['video_id']}"
+            await ctx.channel.send(youtube_video_url)
 
 
 def setup(bot):
