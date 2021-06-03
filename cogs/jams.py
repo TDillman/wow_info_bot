@@ -1,7 +1,7 @@
 import sys
 import yaml
-from youtube_easy_api.easy_wrapper import *
 
+from youtube_easy_api.easy_wrapper import *
 from discord.ext import commands
 
 if not os.path.isfile("config.yaml"):
