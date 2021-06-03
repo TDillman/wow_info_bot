@@ -42,9 +42,14 @@ command_dict = {
         'suck it': 'https://imgur.com/Fy6RhWI'
     }
 
+pfp_path = "jackolantern.jpg"
+fp = open(pfp_path, 'rb')
+pfp = fp.read()
 
 @bot.event
 async def on_ready():
+    await bot.change_presence(activity=discord.Game("Type !help for commands"))
+    await bot.user.edit(avatar=pfp)
     print("\n-------------------")
     print(f'Logged in: {bot.user}')  # show on console
     print(f"Discord.py API version: {discord.__version__}")
@@ -53,11 +58,6 @@ async def on_ready():
     print("-------------------\n")
     affirmation.start()
 
-
-# Setup the game status task of the bot
-@tasks.loop(minutes=1.0)
-async def status_task():
-    await bot.change_presence(activity=discord.Game("Type !help for commands"))
 
 if __name__ == "__main__":
     for file in os.listdir("./cogs"):
