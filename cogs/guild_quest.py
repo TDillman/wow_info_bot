@@ -1,8 +1,8 @@
 import os
 import sys
-
 import discord
 import yaml
+
 from discord.ext import commands
 
 if not os.path.isfile("config.yaml"):
@@ -29,30 +29,35 @@ class GuildQuest(commands.Cog, name="guildquest"):
                 color=config["success"]
             )
             embed1.add_field(
-                name="Guild Quest: June 1st, 2021",
-                value=f"{guild_member_role.mention} -- Find these three images and post your own for a raffle ticket!\n "
-                      f"We're continuing the trend of Vanilla dungeons. You'll find this one in Eastern Kingdoms. "
-                      f"It's the smallest dungeon I've ever seen in my life, and it's super easy to find"
+                name="Guild Quest: June 8, 2021",
+                value=f"{guild_member_role.mention} -- Alright night owls, this is a unique guild quest because it "
+                      f"requires you to be in a certain place at a certain time in WoW. Hopefully you're not doing "
+                      f"anything at midnight PST on Saturday night/Sunday morning."
             )
             embed2 = discord.Embed(
-                description="First Picture",
+                description="Where to be",
                 color=config["success"]
             )
-            embed2.set_image(url="https://i.imgur.com/enkzyHl.jpg")
+            embed2.add_field(
+                name="Location",
+                value="Be at the Photonic Playground in Legion Dalaran at midnight PST Saturday night/Sunday morning "
+                      "when the chest spawns. It's upstairs at 44.8 47.3")
+            embed2.set_image(url="https://i.imgur.com/WMzWwuF.jpeg")
             embed3 = discord.Embed(
-                description="Second Picture",
+                description="What you're looking for",
                 color=config["success"]
             )
-            embed3.set_image(url="https://i.imgur.com/OK7ezEO.jpg")
-            embed4 = discord.Embed(
-                description="Third Picture",
-                color=config["success"]
+            embed3.add_field(
+                name="Find this chest",
+                value="This chest will spawn on the floor at midnight PST. Loot it to get your new shoe shining kit!"
+                      "Post an image of you looting the chest, using the toy, or the toy in your toybox for a raffle "
+                      "ticket."
             )
-            embed4.set_image(url="https://i.imgur.com/LSQoC14.jpg")
+            embed3.set_image(url="https://wow.zamimg.com/uploads/screenshots/normal/562799-sheddles-chest.jpg")
             await context.send(embed=embed1)
             await context.send(embed=embed2)
             await context.send(embed=embed3)
-            await context.send(embed=embed4)
+            await context.send("https://youtu.be/0j0owojgGOc?t=239")
             await context.message.delete()
 
 
