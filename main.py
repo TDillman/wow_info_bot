@@ -49,7 +49,7 @@ pfp = fp.read()
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game("Type !help for commands"))
-    await bot.user.edit(avatar=pfp)
+    #await bot.user.edit(avatar=pfp)
     print("\n-------------------")
     print(f'Logged in: {bot.user}')  # show on console
     print(f"Discord.py API version: {discord.__version__}")
@@ -128,6 +128,21 @@ async def on_message(ctx):
     for key in command_dict:
         if key in ctx.content.lower():
             await ctx.channel.send(command_dict[key])
+
+    # Without the following line, the bot gets stuck and won't process commands
+    await bot.process_commands(ctx)
+
+
+@bot.listen('on_message')
+async def url_fixer(ctx):
+    if ctx.content.startswith("http"):
+        if "?" in ctx.content:
+            bad_url = ctx.content
+            question_mark_index = bad_url.find("?")
+            new_url = bad_url[:question_mark_index]
+            message_author = ctx.author.display_name
+            await ctx.delete()
+            await ctx.channel.send(f'Fixed URL for {message_author}: \n\n{new_url}')
 
     # Without the following line, the bot gets stuck and won't process commands
     await bot.process_commands(ctx)
