@@ -26,9 +26,9 @@ class Jams(commands.Cog, name="jams"):
             Usage: !jams Gaslight Anthem
         """
         try:
-            results = yt.search(args, max_results=5, order='relevance')
+            results = yt.search(args, max_results=5, order='relevance', part=['video_title', 'video_id'])
         except:
-            await ctx.channel.send("We're over our YouTube API quota. Whoops. It'll reset over night. Sorry.")
+            await ctx.channel.send("We're over our YouTube API quota. Whoops. It'll reset over the next 24 hours. Sorry.")
         video_string = ''
         if len(results) == 0:
             await ctx.channel.send(f"No results for {args}")
