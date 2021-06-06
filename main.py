@@ -136,16 +136,14 @@ async def on_message(ctx):
 @bot.listen('on_message')
 async def url_fixer(ctx):
     if ctx.content.startswith("http"):
-        if "?" in ctx.content:
-            bad_url = ctx.content
-            question_mark_index = bad_url.find("?")
-            new_url = bad_url[:question_mark_index]
-            message_author = ctx.author.display_name
-            await ctx.delete()
-            await ctx.channel.send(f'Fixed URL for {message_author}: \n\n{new_url}')
-
-    # Without the following line, the bot gets stuck and won't process commands
-    await bot.process_commands(ctx)
+        if "https://www.youtube.com" not in ctx.content:
+            if "?" in ctx.content:
+                bad_url = ctx.content
+                question_mark_index = bad_url.find("?")
+                new_url = bad_url[:question_mark_index]
+                message_author = ctx.author.display_name
+                await ctx.delete()
+                await ctx.channel.send(f'Fixed URL for {message_author}: \n\n{new_url}')
 
 
 # The code in this event is executed every time a valid commands catches an error
