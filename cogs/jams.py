@@ -1,8 +1,9 @@
+import os
 import sys
 import yaml
 import discord
 
-from youtube_easy_api.easy_wrapper import *
+from youtube_api import YouTubeDataAPI
 from discord.ext import commands
 
 if not os.path.isfile("config.yaml"):
@@ -11,8 +12,7 @@ else:
     with open("config.yaml") as file:
         config = yaml.load(file, Loader=yaml.FullLoader)
 
-youtube_wrapper = YoutubeEasyWrapper()
-youtube_wrapper.initialize(api_key=config["youtube_api_key"])
+yt = YouTubeDataAPI(config['youtube_api_key'])
 
 
 class Jams(commands.Cog, name="jams"):
@@ -26,10 +26,10 @@ class Jams(commands.Cog, name="jams"):
             Usage: !jams Gaslight Anthem
         """
         try:
-            results = youtube_wrapper.search_videos(search_keyword=args, order='relevance')
-        except HttpError:
+            results = yt.search(args, max_results=5, order='relevance')
+        except:
             await ctx.channel.send("We're over our YouTube API quota. Whoops. It'll reset over night. Sorry.")
-        video_string = ''.replace('&#39;', '\'')
+        video_string = ''
         if len(results) == 0:
             await ctx.channel.send(f"No results for {args}")
         else:
@@ -41,12 +41,12 @@ class Jams(commands.Cog, name="jams"):
             )
             if len(results) < 5:
                 for video in results[1:len(results)]:
-                    video_string += f"[{video['title']}](https://www.youtube.com/watch?v={video['video_id']})\n"
+                    video_string += f"[{video['video_title']}](https://www.youtube.com/watch?v={video['video_id']})\n"
             if len(results) >= 5:
                 for video in results[1:6]:
-                    video_string += f"[{video['title']}](https://www.youtube.com/watch?v={video['video_id']})\n"
+                    video_string += f"[{video['video_title']}](https://www.youtube.com/watch?v={video['video_id']})\n"
         embed.add_field(
-            name=f"More relevant videos for {args}:",
+            name=f"More videos for {args}:",
             value=video_string
         )
         await ctx.channel.send(embed=embed)
