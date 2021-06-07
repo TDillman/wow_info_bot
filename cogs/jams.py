@@ -25,10 +25,7 @@ class Jams(commands.Cog, name="jams"):
         Links a YouTube video with the requested search result
             Usage: !jams Gaslight Anthem
         """
-        try:
-            results = yt.search(args, max_results=5, order='relevance', part=['video_title', 'video_id'])
-        except:
-            await ctx.channel.send("We're over our YouTube API quota. Whoops. It'll reset over the next 24 hours. Sorry.")
+        results = yt.search(args, max_results=5, order='relevance')
         video_string = ''
         if len(results) == 0:
             await ctx.channel.send(f"No results for {args}")
@@ -45,11 +42,11 @@ class Jams(commands.Cog, name="jams"):
             if len(results) >= 5:
                 for video in results[1:6]:
                     video_string += f"[{video['video_title']}](https://www.youtube.com/watch?v={video['video_id']})\n"
-        embed.add_field(
-            name=f"More videos for {args}:",
-            value=video_string
-        )
-        await ctx.channel.send(embed=embed)
+            embed.add_field(
+                name=f"More videos for {args}:",
+                value=video_string
+            )
+            await ctx.channel.send(embed=embed)
 
 
 def setup(bot):
