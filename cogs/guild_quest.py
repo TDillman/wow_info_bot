@@ -49,7 +49,7 @@ class GuildQuest(commands.Cog, name="guildquest"):
             )
             embed3.add_field(
                 name="Find this chest",
-                value="This chest will spawn on the floor at midnight PST. Loot it to get your new shoe shining kit!"
+                value="This chest will spawn on the floor at midnight PST. Loot it to get your new shoe shining kit! "
                       "Post an image of you looting the chest, using the toy, or the toy in your toybox for a raffle "
                       "ticket."
             )
@@ -57,7 +57,7 @@ class GuildQuest(commands.Cog, name="guildquest"):
             await context.send(embed=embed1)
             await context.send(embed=embed2)
             await context.send(embed=embed3)
-            await context.send("https://youtu.be/0j0owojgGOc?t=239")
+            await context.send("https://www.youtube.com/watch?v=0j0owojgGOc&t=239s")
             await context.message.delete()
 
 
