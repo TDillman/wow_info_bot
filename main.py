@@ -137,7 +137,7 @@ async def on_message(ctx):
 @bot.listen('on_message')
 async def url_fixer(ctx):
     if ctx.content.startswith("http"):
-        if "https://www.youtube.com" not in ctx.content:
+        if "youtu" not in ctx.content:
             if "?" in ctx.content:
                 bad_url = ctx.content
                 question_mark_index = bad_url.find("?")
