@@ -29,35 +29,45 @@ class GuildQuest(commands.Cog, name="guildquest"):
                 color=config["success"]
             )
             embed1.add_field(
-                name="Guild Quest: June 8, 2021",
-                value=f"{guild_member_role.mention} -- Alright night owls, this is a unique guild quest because it "
-                      f"requires you to be in a certain place at a certain time in WoW. Hopefully you're not doing "
-                      f"anything at midnight PST on Saturday night/Sunday morning."
+                name="Guild Quest: June 15th, 2021",
+                value=f"{guild_member_role.mention} -- Guild Quest Tuesday! If you do things right, you'll get "
+                      f"two toys from this one. But there's a catch: You have to be a Horde character to complete "
+                      f"this particular quest. Our main quest is to find the [Zandalari Effigy Amulet]"
+                      f"(https://ptr.wowhead.com/item=156649/zandalari-effigy-amulet)"
             )
             embed2 = discord.Embed(
-                description="Where to be",
+                description="Location",
                 color=config["success"]
             )
             embed2.add_field(
-                name="Location",
-                value="Be at the Photonic Playground in Legion Dalaran at midnight PST Saturday night/Sunday morning "
-                      "when the chest spawns. It's upstairs at 44.8 47.3")
-            embed2.set_image(url="https://i.imgur.com/WMzWwuF.jpeg")
+                name="Where to Start",
+                value="Start in Dazar'Alor's Grand Bazaar, with Griftah (our BC Classic brethren may recognize him "
+                      "from Shattrath City).\n\nhttps://i.imgur.com/pWQy8RT.jpg")
+            embed2.set_image(url="https://wow.zamimg.com/uploads/screenshots/normal/742830-griftah.jpg")
             embed3 = discord.Embed(
-                description="What you're looking for",
+                description="Map of Dazar'Alor",
+                colour=config["success"]
+            )
+            embed3.set_image(url="https://i.imgur.com/pWQy8RT.jpg")
+            embed4 = discord.Embed(
+                description="Time to Trade",
                 color=config["success"]
             )
-            embed3.add_field(
-                name="Find this chest",
-                value="This chest will spawn on the floor at midnight PST. Loot it to get your new shoe shining kit! "
-                      "Post an image of you looting the chest, using the toy, or the toy in your toybox for a raffle "
-                      "ticket."
+            embed4.add_field(
+                name="Steps:",
+                value=f"1. Purchase a  Sack of 'Discarded' Hearthstones from Griftah (52.9, 89.9).\n"
+                      f"2. Go to Rakle the Wretched (34.8, 11.5) and trade the  Sack of 'Discarded' Hearthstones for a  Much-Too-Hot Pepper.\n"
+                      f"3. Go to Trader Haw'li (37.8, 14.7) and trade the  Much-Too-Hot Pepper for some  Golden Seeds. **This "
+                      f"vendor also sells Haw'li's Hot & Spicy Chili, so you can pick that up here too**\n"
+                      f"4. Go to Granda Watae (42.2, 35.7) and trade the  Golden Seeds for a  Centennial Blossom.\n"
+                      f"5. Go to Trader Nog (57.2, 91.5) and trade the  Centennial Blossom for a  Preserved Night Elf Head.\n"
+                      f"6. Go to 'Black Eye' Zenru (53.8, 86) and trade the  Preserved Night Elf Head for a  Counterfeit Rastakhan Mask.\n"
+                      f"7. Finally, return to Griftah (52.9, 89.9) and trade the  Counterfeit Rastakhan Mask for the  Zandalari Effigy Amulet.\n"
             )
-            embed3.set_image(url="https://wow.zamimg.com/uploads/screenshots/normal/562799-sheddles-chest.jpg")
             await context.send(embed=embed1)
             await context.send(embed=embed2)
             await context.send(embed=embed3)
-            await context.send("https://www.youtube.com/watch?v=0j0owojgGOc&t=239s")
+            await context.send(embed=embed4)
             await context.message.delete()
 
 
