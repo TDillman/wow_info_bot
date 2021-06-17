@@ -134,19 +134,6 @@ async def on_message(ctx):
     await bot.process_commands(ctx)
 
 
-@bot.listen('on_message')
-async def url_fixer(ctx):
-    if ctx.content.startswith("http"):
-        if "youtu" not in ctx.content:
-            if "?" in ctx.content:
-                bad_url = ctx.content
-                question_mark_index = bad_url.find("?")
-                new_url = bad_url[:question_mark_index]
-                message_author = ctx.author.display_name
-                await ctx.delete()
-                await ctx.channel.send(f'Fixed URL for {message_author}: \n\n{new_url}')
-
-
 # The code in this event is executed every time a valid commands catches an error
 @bot.event
 async def on_command_error(context, error):
