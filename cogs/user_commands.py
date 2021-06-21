@@ -44,7 +44,7 @@ class User(commands.Cog, name="user"):
         await ctx.send("https://img1.cgtrader.com/items/1911482/ca45cf3f32/air-horn-3d-model-max-obj-mtl-3ds-fbx-dxf.jpg")
 
     @commands.command(name="whatever")
-    async def scrumpy(self, ctx):
+    async def whatever(self, ctx):
         """
         That's just, like, your opinion man
         """
@@ -154,6 +154,13 @@ class User(commands.Cog, name="user"):
         Best WTF gif there is
         """
         await ctx.send("https://giphy.com/gifs/what-the-fuck-wtf-ukGm72ZLZvYfS")
+
+    @commands.command(name="rain")
+    async def rain(self, ctx):
+        """
+        He said it himself
+        """
+        await ctx.send("https://cdn.discordapp.com/attachments/676183384061378571/856642945481310228/unknown.png")
 
 
 def setup(bot):
