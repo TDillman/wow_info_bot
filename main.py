@@ -31,7 +31,7 @@ discord_access_token = config["discord_token"]
 
 api_client = BlizzardApi(client_id, client_secret)
 
-bot = Bot(command_prefix=config["bot_prefix"])
+bot = Bot(command_prefix=config["bot_prefix"], case_insensitive=True)
 
 bot.remove_command("help")
 
