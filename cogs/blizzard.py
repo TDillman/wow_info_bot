@@ -168,12 +168,14 @@ class Blizzard(commands.Cog, name="blizzard"):
                 raider_io_heal = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['healer']
                 raider_io_tank = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['tank']
                 raider_io_nathria = raider_io_object['raid_progression']['castle-nathria']['summary']
+                raider_io_sanky_d = raider_io_object['raid_progression']['sanctum-of-domination']['summary']
             else:
                 raider_io_overall = "Unavailable"
                 raider_io_dps = "Unavailable"
                 raider_io_heal = "Unavailable"
                 raider_io_tank = "Unavailable"
                 raider_io_nathria = "Unavailable"
+                raider_io_sanky_d = "Unavailable"
 
             try:
                 covenant_name = character_gear_object['covenant_progress']['chosen_covenant']['name']
@@ -212,6 +214,7 @@ class Blizzard(commands.Cog, name="blizzard"):
                 healer_io_rating: float = raider_io_heal
                 tank_io_rating: float = raider_io_tank
                 nathria_raid_prog: str = raider_io_nathria
+                sanky_d_raid_prog: str = raider_io_sanky_d
                 raider_io_url: str = f'https://raider.io/characters/us/{server_slug}/{character_name}'
                 armory_url: str = f'https://worldofwarcraft.com/en-us/character/us/{server_slug}/{character_name}'
                 warcraftlogs_url: str = f'https://www.warcraftlogs.com/character/us/{server_slug}/{character_name}'
@@ -255,7 +258,8 @@ class Blizzard(commands.Cog, name="blizzard"):
                                      f'Healer rating: {character.healer_io_rating}\n' \
                                      f'Tank rating: {character.tank_io_rating}'
 
-            raider_io_raid_string = f'Nathria: {character.nathria_raid_prog}'
+            raider_io_raid_string = f'Nathria: {character.nathria_raid_prog}\n' \
+                                    f'Sanctum of Domination: {character.sanky_d_raid_prog}'
 
             discord_embed_color = discord_embed_color_dict[character.player_class]
 
