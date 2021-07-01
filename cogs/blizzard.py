@@ -259,7 +259,7 @@ class Blizzard(commands.Cog, name="blizzard"):
                                      f'Tank rating: {character.tank_io_rating}'
 
             raider_io_raid_string = f'Nathria: {character.nathria_raid_prog}\n' \
-                                    f'Sanctum of Domination: {character.sanky_d_raid_prog}'
+                                    f'Sanctum: {character.sanky_d_raid_prog}'
 
             discord_embed_color = discord_embed_color_dict[character.player_class]
 
