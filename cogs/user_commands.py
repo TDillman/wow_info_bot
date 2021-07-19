@@ -162,6 +162,13 @@ class User(commands.Cog, name="user"):
         """
         await ctx.send("https://cdn.discordapp.com/attachments/676183384061378571/856642945481310228/unknown.png")
 
+    @commands.command(name="imout")
+    async def imout(self, ctx):
+        """
+        That flip though
+        """
+        await ctx.send("https://media.discordapp.net/attachments/676183306924064768/866005404839837706/sylvanas.gif")
+
 
 def setup(bot):
     bot.add_cog(User(bot))
