@@ -39,9 +39,9 @@ class User(commands.Cog, name="user"):
     @commands.command(name="spooky")
     async def spooky(self, ctx):
         """
-        bwAAAAAAAHHHP!
+        Dem abs
         """
-        await ctx.send("https://img1.cgtrader.com/items/1911482/ca45cf3f32/air-horn-3d-model-max-obj-mtl-3ds-fbx-dxf.jpg")
+        await ctx.send("https://media.giphy.com/media/vgNYKk8OtuKI0/giphy.gif")
 
     @commands.command(name="whatever")
     async def whatever(self, ctx):
