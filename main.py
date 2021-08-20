@@ -187,15 +187,14 @@ async def join(ctx):
             async with ctx.typing():
                 filename = "broncena-intro.ogg"
                 voice_channel.play(discord.FFmpegPCMAudio(executable="/usr/bin/ffmpeg", source=filename))
-            await ctx.send(f'**Now playing** {filename}')
         except:
-            await ctx.send("The bot is not connected to a voice channel.")
+            pass
         voice_client = ctx.message.guild.voice_client
         if voice_client.is_connected():
             await asyncio.sleep(13)
             await voice_client.disconnect()
         else:
-            await ctx.send("The bot is not connected to a voice channel.")
+            pass
 
 
 @bot.command(name='stop', help='Stops the BRON')
