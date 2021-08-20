@@ -156,27 +156,27 @@ async def on_command_error(context, error):
     raise error
 
 
-# @tasks.loop(hours=24)
-# async def affirmation():
-#     url = 'https://www.affirmations.dev'
-#
-#     request = requests.get(url)
-#     affirmation_object = json.loads(request.text)
-#
-#     # Create embed in Discord
-#     embed = discord.Embed(title="Daily Affirmation", color=config["success"])
-#     embed.set_thumbnail(url='https://www.pitara.com/media/lotus-flower_hu4aeaffed200a0cfd996c55c6e5156325_90396_600x0_resize_q60_box.jpg')
-#     embed.add_field(name='Affirmation', value=affirmation_object['affirmation'])
-#
-#     # Declare #might-health as destination channel
-#     await bot.get_channel(710566582845177888).send(embed=embed)
+@tasks.loop(hours=24)
+async def affirmation():
+    url = 'https://www.affirmations.dev'
+
+    request = requests.get(url)
+    affirmation_object = json.loads(request.text)
+
+    # Create embed in Discord
+    embed = discord.Embed(title="Daily Affirmation", color=config["success"])
+    embed.set_thumbnail(url='https://www.pitara.com/media/lotus-flower_hu4aeaffed200a0cfd996c55c6e5156325_90396_600x0_resize_q60_box.jpg')
+    embed.add_field(name='Affirmation', value=affirmation_object['affirmation'])
+
+    # Declare #might-health as destination channel
+    await bot.get_channel(710566582845177888).send(embed=embed)
 
 
 @bot.command(name='broncena', help='Make Kat hate you forever')
 async def join(ctx):
     if ctx.message.author.id in config["owners"]:
         if not ctx.message.author.voice:
-            await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
+            await ctx.send(f"{ctx.message.author.name} is not connected to a voice channel")
             return
         else:
             channel = ctx.message.author.voice.channel
@@ -187,7 +187,7 @@ async def join(ctx):
             async with ctx.typing():
                 filename = "broncena-intro.ogg"
                 voice_channel.play(discord.FFmpegPCMAudio(executable="/usr/bin/ffmpeg", source=filename))
-            await ctx.send(f'**Now playing:** {filename}')
+            await ctx.send(f'**Now playing** {filename}')
         except:
             await ctx.send("The bot is not connected to a voice channel.")
         voice_client = ctx.message.guild.voice_client
