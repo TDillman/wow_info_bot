@@ -191,6 +191,7 @@ async def join(ctx):
             pass
         voice_client = ctx.message.guild.voice_client
         if voice_client.is_connected():
+            await ctx.message.delete()
             await asyncio.sleep(13)
             await voice_client.disconnect()
         else:
