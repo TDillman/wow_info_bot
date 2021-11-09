@@ -88,9 +88,9 @@ class User(commands.Cog, name="user"):
     @commands.command(name="lynkz")
     async def lynkz(self, ctx):
         """
-        Just one man's opinion
+        Is that a headless person?
         """
-        await ctx.send("https://tenor.com/view/james-franco-fuck-that-dude-fuckoff-annoyed-annoying-gif-11146686")
+        await ctx.send("https://media.discordapp.net/attachments/676183284123828236/899091363046522910/unknown.png")
 
     @commands.command(name="candercane")
     async def candercane(self, ctx):
@@ -175,6 +175,7 @@ class User(commands.Cog, name="user"):
         Daddy, chill!
         """
         await ctx.send("https://tenor.com/view/what-the-hell-is-even-gif-20535402")
+
 
 def setup(bot):
     bot.add_cog(User(bot))

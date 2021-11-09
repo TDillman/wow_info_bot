@@ -43,15 +43,15 @@ command_dict = {
         'suck it': 'https://imgur.com/Fy6RhWI'
     }
 
-# pfp_path = "jackolantern.jpg"
-# fp = open(pfp_path, 'rb')
-# pfp = fp.read()
+pfp_path = "beymax.jpg"
+fp = open(pfp_path, 'rb')
+pfp = fp.read()
 
 
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game("Type !help for commands"))
-    # await bot.user.edit(avatar=pfp)
+    await bot.user.edit(avatar=pfp)
     print("\n-------------------")
     print(f'Logged in: {bot.user}')  # show on console
     print(f"Discord.py API version: {discord.__version__}")
