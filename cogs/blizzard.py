@@ -318,7 +318,7 @@ class Blizzard(commands.Cog, name="blizzard"):
         time.sleep(.25)
         await ctx.message.delete()
 
-    @commands.command(pass_context=True, name="status")
+    @commands.command(pass_context=True, name="status", aliases=["serverstatus", "arygos"])
     async def status(self, ctx):
         """
         Returns an embed with the current status (up/down) of Arygos

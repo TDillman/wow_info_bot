@@ -176,6 +176,13 @@ class User(commands.Cog, name="user"):
         """
         await ctx.send("https://tenor.com/view/what-the-hell-is-even-gif-20535402")
 
+    @commands.command(name="guacdrop", aliases=["droptheguac"])
+    async def guacdrop(self, ctx):
+        """
+        Daddy, chill!
+        """
+        await ctx.send("https://media.discordapp.net/attachments/917450971569877044/917465265036488704/20211105_213516.jpg")
+
 
 def setup(bot):
     bot.add_cog(User(bot))
