@@ -10,10 +10,9 @@ import os
 import platform
 import yaml
 import sys
-import requests
-import json
+import random
 
-from discord.ext import commands, tasks
+from discord.ext import commands
 from discord.ext.commands import Bot
 from blizzardapi import BlizzardApi
 
@@ -36,9 +35,12 @@ bot = Bot(command_prefix=config["bot_prefix"], case_insensitive=True)
 
 bot.remove_command("help")
 
+flex_list = ['https://cdn.discordapp.com/attachments/710566582845177888/940689395206484008/IMG_1965.jpg',
+             'https://cdn.discordapp.com/attachments/710566582845177888/940696039952883772/20220208_134926.jpg',
+             'https://cdn.discordapp.com/attachments/710566582845177888/946068676279414794/14AD1CE3-B03E-4AC1-AA28-983CF289D354.jpg']
+
 command_dict = {
         'cool cool cool': 'https://tenor.com/view/andy-samberg-brooklyn99-jake-peralta-cool-gif-12063970',
-        'flex': 'https://cdn.discordapp.com/attachments/676183284123828236/823278892676022353/image0.jpg',
         'listen here you little shit': 'https://i.pinimg.com/originals/ef/a6/48/efa648c67f3cb05287ded99612af130f.png',
         'suck it': 'https://imgur.com/Fy6RhWI'
     }
@@ -58,7 +60,7 @@ async def on_ready():
     print(f"Python version: {platform.python_version()}")
     print(f"Running on: {platform.system()} {platform.release()} ({os.name})")
     print("-------------------\n")
-    affirmation.start()
+    #affirmation.start()
 
 
 if __name__ == "__main__":
@@ -130,6 +132,8 @@ async def on_message(ctx):
     for key in command_dict:
         if key in ctx.content.lower():
             await ctx.channel.send(command_dict[key])
+    if "flex" in ctx.content.lower():
+        await ctx.channel.send(random.choice(flex_list))
 
     # Without the following line, the bot gets stuck and won't process commands
     await bot.process_commands(ctx)
@@ -156,20 +160,20 @@ async def on_command_error(context, error):
     raise error
 
 
-@tasks.loop(hours=24)
-async def affirmation():
-    url = 'https://www.affirmations.dev'
-
-    request = requests.get(url)
-    affirmation_object = json.loads(request.text)
-
-    # Create embed in Discord
-    embed = discord.Embed(title="Daily Affirmation", color=config["success"])
-    embed.set_thumbnail(url='https://www.pitara.com/media/lotus-flower_hu4aeaffed200a0cfd996c55c6e5156325_90396_600x0_resize_q60_box.jpg')
-    embed.add_field(name='Affirmation', value=affirmation_object['affirmation'])
-
-    # Declare #might-health as destination channel
-    await bot.get_channel(710566582845177888).send(embed=embed)
+# @tasks.loop(hours=24)
+# async def affirmation():
+#     url = 'https://www.affirmations.dev'
+#
+#     request = requests.get(url)
+#     affirmation_object = json.loads(request.text)
+#
+#     # Create embed in Discord
+#     embed = discord.Embed(title="Daily Affirmation", color=config["success"])
+#     embed.set_thumbnail(url='https://www.pitara.com/media/lotus-flower_hu4aeaffed200a0cfd996c55c6e5156325_90396_600x0_resize_q60_box.jpg')
+#     embed.add_field(name='Affirmation', value=affirmation_object['affirmation'])
+#
+#     # Declare #might-health as destination channel
+#     await bot.get_channel(710566582845177888).send(embed=embed)
 
 
 @bot.command(name='broncena', help='Make Kat hate you forever')
@@ -193,6 +197,32 @@ async def join(ctx):
         if voice_client.is_connected():
             await ctx.message.delete()
             await asyncio.sleep(13)
+            await voice_client.disconnect()
+        else:
+            pass
+
+
+@bot.command(name='emotionaldamage', help='EMOTIONAL DAMAGE')
+async def join(ctx):
+    if ctx.message.author.id in config["owners"]:
+        if not ctx.message.author.voice:
+            await ctx.send(f"{ctx.message.author.name} is not connected to a voice channel")
+            return
+        else:
+            channel = ctx.message.author.voice.channel
+        await channel.connect()
+        try:
+            server = ctx.message.guild
+            voice_channel = server.voice_client
+            async with ctx.typing():
+                filename = "emotional_damage.mp3"
+                voice_channel.play(discord.FFmpegPCMAudio(executable="/usr/bin/ffmpeg", source=filename))
+        except:
+            pass
+        voice_client = ctx.message.guild.voice_client
+        if voice_client.is_connected():
+            await ctx.message.delete()
+            await asyncio.sleep(4)
             await voice_client.disconnect()
         else:
             pass

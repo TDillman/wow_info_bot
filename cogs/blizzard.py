@@ -169,6 +169,7 @@ class Blizzard(commands.Cog, name="blizzard"):
                 raider_io_tank = raider_io_object['mythic_plus_scores_by_season'][0]['scores']['tank']
                 raider_io_nathria = raider_io_object['raid_progression']['castle-nathria']['summary']
                 raider_io_sanky_d = raider_io_object['raid_progression']['sanctum-of-domination']['summary']
+                raider_io_sofo = raider_io_object['raid_progression']['sepulcher-of-the-first-ones']['summary']
             else:
                 raider_io_overall = "Unavailable"
                 raider_io_dps = "Unavailable"
@@ -176,6 +177,7 @@ class Blizzard(commands.Cog, name="blizzard"):
                 raider_io_tank = "Unavailable"
                 raider_io_nathria = "Unavailable"
                 raider_io_sanky_d = "Unavailable"
+                raider_io_sofo = "Unavailable"
 
             try:
                 covenant_name = character_gear_object['covenant_progress']['chosen_covenant']['name']
@@ -215,6 +217,7 @@ class Blizzard(commands.Cog, name="blizzard"):
                 tank_io_rating: float = raider_io_tank
                 nathria_raid_prog: str = raider_io_nathria
                 sanky_d_raid_prog: str = raider_io_sanky_d
+                sofo_raid_prog: str = raider_io_sofo
                 raider_io_url: str = f'https://raider.io/characters/us/{server_slug}/{character_name}'
                 armory_url: str = f'https://worldofwarcraft.com/en-us/character/us/{server_slug}/{character_name}'
                 warcraftlogs_url: str = f'https://www.warcraftlogs.com/character/us/{server_slug}/{character_name}'
@@ -242,16 +245,16 @@ class Blizzard(commands.Cog, name="blizzard"):
             if not enchant_string:
                 enchant_string = "No enchantments detected"
 
-            legendary_string = None
+            legendary_string =""
             for x in range(len(character_equipment_object['equipped_items'])):
                 if character_gear_object['level'] < 60:
-                    legendary_string = "No Legendary"
+                    legendary_string = "Character under level 60"
                 elif character_equipment_object['equipped_items'][x]['quality']['name'] == "Legendary" and \
                         character_equipment_object['equipped_items'][x]['level']['value'] < 190:
                     legendary_string = "No Legendary"
                 elif character_equipment_object['equipped_items'][x]['quality']['name'] == "Legendary":
-                    legendary_string = (f"{character_equipment_object['equipped_items'][x]['name']}\n"
-                                        f"{character_equipment_object['equipped_items'][x]['level']['display_string']}")
+                    legendary_string += (f"{character_equipment_object['equipped_items'][x]['name']}\n"
+                                         f"{character_equipment_object['equipped_items'][x]['level']['display_string']}\n")
 
             raider_io_mplus_string = f'Overall rating: {character.overall_io_rating}\n' \
                                      f'DPS rating: {character.dps_io_rating}\n' \
@@ -259,7 +262,8 @@ class Blizzard(commands.Cog, name="blizzard"):
                                      f'Tank rating: {character.tank_io_rating}'
 
             raider_io_raid_string = f'Nathria: {character.nathria_raid_prog}\n' \
-                                    f'Sanctum: {character.sanky_d_raid_prog}'
+                                    f'Sanctum: {character.sanky_d_raid_prog}\n' \
+                                    f'Sepulcher: {character.sofo_raid_prog}'
 
             discord_embed_color = discord_embed_color_dict[character.player_class]
 

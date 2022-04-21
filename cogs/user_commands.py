@@ -1,6 +1,8 @@
 import os
 import sys
 import yaml
+import aiohttp
+import random
 
 from discord.ext import commands
 
@@ -9,6 +11,12 @@ if not os.path.isfile("config.yaml"):
 else:
     with open("config.yaml") as file:
         config = yaml.load(file, Loader=yaml.FullLoader)
+
+peaceout_list = ["https://tenor.com/view/drive-by-50cent-smile-see-ya-swag-gif-5548830",
+                 "https://giphy.com/gifs/S7jKEqmTbee7S",
+                 "https://tenor.com/view/50cent-bert-gif-3799566",
+                 "https://cdn.discordapp.com/attachments/710566582845177888/952209615402201148/peaceout.gif"
+                 ]
 
 
 class User(commands.Cog, name="user"):
@@ -41,7 +49,7 @@ class User(commands.Cog, name="user"):
         """
         Dem abs
         """
-        await ctx.send("https://media.giphy.com/media/vgNYKk8OtuKI0/giphy.gif")
+        await ctx.send("https://tenor.com/view/arrested-development-claw-hand-juice-box-laughing-evil-laugh-gif-5335530")
 
     @commands.command(name="whatever")
     async def whatever(self, ctx):
@@ -169,7 +177,7 @@ class User(commands.Cog, name="user"):
         """
         await ctx.send("https://media.discordapp.net/attachments/676183306924064768/866005404839837706/sylvanas.gif")
 
-    @commands.command(name="daddychill")
+    @commands.command(name="daddychill", aliases=["whatthehell"])
     async def daddychill(self, ctx):
         """
         Daddy, chill!
@@ -182,6 +190,65 @@ class User(commands.Cog, name="user"):
         Daddy, chill!
         """
         await ctx.send("https://media.discordapp.net/attachments/917450971569877044/917465265036488704/20211105_213516.jpg")
+
+    @commands.command(name="rightright", aliases=["ohright", "rightrightright"])
+    async def rightright(self, ctx):
+        """
+        Right right right right right right...
+        """
+        await ctx.send("https://tenor.com/view/seinfeld-jerry-seinfeld-oh-right-agree-gif-4436696")
+
+    @commands.command(name="shit")
+    async def shit(self, ctx):
+        """
+        Get your shit together
+        """
+        await ctx.send("https://giphy.com/gifs/get-well-then-woTdBa435yy6A")
+
+    @commands.command(name="hydrate")
+    async def hydrate(self, ctx):
+        """
+        DRINK
+        """
+        await ctx.send("https://tenor.com/view/water-smile-drink-water-gif-13518129")
+
+    @commands.command(name="spoon", aliases=["party"])
+    async def spoon(self, ctx):
+        """
+        A little party never killed nobody...except Belushi.
+        """
+        await ctx.send("https://media.discordapp.net/attachments/503025662546935809/747820543918735370/A_little_party_never_killed_no_body_gif.gif")
+
+    @commands.command(name="imdumb")
+    async def imdumb(self, ctx):
+        """
+        Dumbest boy in school
+        """
+        await ctx.send("https://tenor.com/view/winston-schmidt-max-greenfield-new-girl-gif-15041554")
+
+    @commands.command(name="aster", aliases=["asterend"])
+    async def aster(self, ctx):
+        """
+        Cheeeeese!
+        """
+        await ctx.send("https://cdn.discordapp.com/attachments/938971434246631435/940347663533084732/Chaotic_Aster.png")
+
+    @commands.command(name="cat")
+    async def cat(self, ctx):
+        """
+        It's a cat
+        """
+        async with aiohttp.ClientSession() as session:
+            async with session.get('http://aws.random.cat/meow') as r:
+                if r.status == 200:
+                    js = await r.json()
+                    await ctx.send(js['file'])
+    @commands.command(name="peaceout")
+    async def peaceout(self, ctx):
+        """
+        Peace out
+        """
+        await ctx.send(random.choice(peaceout_list))
 
 
 def setup(bot):
